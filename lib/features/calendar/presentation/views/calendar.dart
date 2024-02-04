@@ -18,28 +18,59 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   late ValueNotifier<DateTime> _focusedDay;
   late DateTime? _selectedDay;
+  late ValueNotifier<String> _value;
 
   @override
   void initState() {
     _focusedDay = ValueNotifier(DateTime.now());
     _selectedDay = DateTime.now();
+    _value = ValueNotifier<String>('2');
+    _value.addListener(() {
+      switch (_value.value) {
+        case "1":
+          context.router.push(
+            ReunionTimeSlots(date: _focusedDay),
+          );
+          break;
+        case "2":
+          context.router.push(
+            ExerciceTimeSlots(date: _focusedDay),
+          );
+          break;
+        case "3":
+          context.router.push(
+            AbsenceTimeSlots(date: _focusedDay),
+          );
+          break;
+
+        default:
+          // Handle other cases if needed
+          break;
+      }
+    });
 
     super.initState();
   }
 
-  String _value = '1';
   final _items = [
     const DropdownMenuItem(
       value: '1',
       child: Text(
-        'Reunion',
+        'Reunions',
         style: TextStyle(color: Color(0xFF4DC591)),
       ),
     ),
     const DropdownMenuItem(
       value: '2',
       child: Text(
-        'Reunion',
+        'Exercices',
+        style: TextStyle(color: Color(0xFF4DC591)),
+      ),
+    ),
+    const DropdownMenuItem(
+      value: '3',
+      child: Text(
+        'Absences',
         style: TextStyle(color: Color(0xFF4DC591)),
       ),
     )
@@ -137,36 +168,11 @@ class _CalendarState extends State<Calendar> {
                               ),
                               child: Center(
                                 child: DropdownButton(
-                                  value: _value,
+                                  value: _value.value,
                                   items: _items,
                                   onChanged: (String? newItem) {
-                                    switch (newItem) {
-                                      case "1":
-                                        context.router.push(
-                                          ReunionTimeSlots(date: _focusedDay),
-                                        );
-                                        break;
-                                      case "2":
-                                        context.router.push(
-                                          ReunionTimeSlots(date: _focusedDay),
-                                        );
-                                        break;
-                                      // case "3":
-                                      //     context.router.push(EmploiTimeSlots());
-                                      //   break;
-                                      // case "4":
-                                      //     context.router.push(EmploiTimeSlots());
-                                      //   break;
-                                      // case "5":
-                                      //     context.router.push(EmploiTimeSlots());
-                                      //   break;
-                                      default:
-                                        // Handle other cases if needed
-                                        break;
-                                    }
-
                                     setState(() {
-                                      _value = newItem!;
+                                      _value.value = newItem!;
                                     });
                                   },
                                   icon: const Icon(

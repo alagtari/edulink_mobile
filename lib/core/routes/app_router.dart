@@ -9,8 +9,9 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: Bulletin.page),
         AutoRoute(page: Calendar.page, children: [
-          AutoRoute(page: EmploiTimeSlots.page, initial: true),
           AutoRoute(page: ReunionTimeSlots.page),
+          AutoRoute(page: ExerciceTimeSlots.page),
+          AutoRoute(page: AbsenceTimeSlots.page),
         ]),
         AutoRoute(page: Cantine.page),
         AutoRoute(page: MealsDay.page),

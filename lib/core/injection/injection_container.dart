@@ -4,8 +4,14 @@ import 'package:edulink_mobile/core/common_used/dio_provider.dart';
 import 'package:edulink_mobile/features/auth/login/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/auth/login/data/repositories/auth_repository_impl.dart';
 import 'package:edulink_mobile/features/auth/login/domain/repositories/auth_repository.dart';
+import 'package:edulink_mobile/features/calendar/data/data_sources/absence_remote_data_source.dart';
+import 'package:edulink_mobile/features/calendar/data/data_sources/exercice_remote_data_source.dart';
 import 'package:edulink_mobile/features/calendar/data/data_sources/reunion_remote_data_source.dart';
+import 'package:edulink_mobile/features/calendar/data/repositories/absences_repository_impl.dart';
+import 'package:edulink_mobile/features/calendar/data/repositories/exercices_repository_impl.dart';
 import 'package:edulink_mobile/features/calendar/data/repositories/reunions_repository_impl.dart';
+import 'package:edulink_mobile/features/calendar/domain/repositories/absences_repository.dart';
+import 'package:edulink_mobile/features/calendar/domain/repositories/exercices_repository.dart';
 import 'package:edulink_mobile/features/calendar/domain/repositories/reunions_repository.dart';
 import 'package:edulink_mobile/features/cantine/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/cantine/data/repositories/meals_repository_impl.dart';
@@ -65,5 +71,19 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<ReunionsRepository>(
     () => ReunionsRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<ExerciceOnlineDataSource>(
+    () => ExerciceOnlineDataSourceImpl(),
+  );
+  sl.registerLazySingleton<ExerciceRepository>(
+    () => ExerciceRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<AbsenceOnlineDataSource>(
+    () => AbsenceOnlineDataSourceImpl(),
+  );
+  sl.registerLazySingleton<AbsenceRepository>(
+    () => AbsenceRepositoryImpl(dataSource: sl()),
   );
 }

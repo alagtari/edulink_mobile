@@ -1,41 +1,43 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:edulink_mobile/features/calendar/data/models/reunion_model.dart';
-import 'package:edulink_mobile/features/calendar/presentation/bloc/reunion/reunions_bloc.dart';
-import 'package:edulink_mobile/features/calendar/presentation/widgets/reunion_time_slot.dart';
+import 'package:edulink_mobile/features/calendar/data/models/absence_model.dart';
+import 'package:edulink_mobile/features/calendar/presentation/bloc/absence/absences_bloc.dart';
+import 'package:edulink_mobile/features/calendar/presentation/widgets/absence_time_slot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 @RoutePage()
-class ReunionTimeSlots extends StatefulWidget implements AutoRouteWrapper {
+class AbsenceTimeSlots extends StatefulWidget implements AutoRouteWrapper {
   final ValueNotifier<DateTime> date;
 
-  const ReunionTimeSlots({
+  const AbsenceTimeSlots({
     super.key,
     required this.date,
   });
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => ReunionsBloc()
-          ..add(GetReunionsEvent(
-              date: DateFormat('yyyy-MM-dd').format(date.value))),
+        create: (_) => AbsencesBloc()..add(GetAbsencesEvent()),
         child: this,
       );
   @override
-  State<ReunionTimeSlots> createState() => _ReunionTimeSlotsState();
+  State<AbsenceTimeSlots> createState() => _AbsenceTimeSlotsState();
 }
 
-class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
-  late ValueNotifier<List<ReunionModel>> _reunions;
+class _AbsenceTimeSlotsState extends State<AbsenceTimeSlots> {
+  late ValueNotifier<List<AbsenceModel>> _absences;
+  late List<AbsenceModel> _allAbsences;
   @override
   void initState() {
-    _reunions = ValueNotifier<List<ReunionModel>>([]);
+    _absences = ValueNotifier<List<AbsenceModel>>([]);
+    _allAbsences = [];
     widget.date.addListener(() {
       String formattedDate = DateFormat('yyyy-MM-dd').format(widget.date.value);
-      context.read<ReunionsBloc>().add(GetReunionsEvent(date: formattedDate));
+      List<AbsenceModel> filteredAbsences = _allAbsences
+          .where((absence) => absence.date == formattedDate)
+          .toList();
+      _absences.value = filteredAbsences;
+      context.read<AbsencesBloc>().add(GetAbsencesEvent());
     });
     super.initState();
   }
@@ -47,8 +49,8 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            ValueListenableBuilder<List<ReunionModel>>(
-              valueListenable: _reunions,
+            ValueListenableBuilder<List<AbsenceModel>>(
+              valueListenable: _absences,
               builder: (context, value, child) => value.isNotEmpty
                   ? Row(
                       children: [
@@ -69,7 +71,7 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
                           width: 35,
                         ),
                         const Text(
-                          'Reunions',
+                          'Absences',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Color(0xFFBCC1CD),
@@ -85,26 +87,25 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
             const SizedBox(
               height: 20,
             ),
-            BlocListener<ReunionsBloc, ReunionsState>(
+            BlocListener<AbsencesBloc, AbsencesState>(
               listener: (context, state) {
-                if (state is GetReunionsSuccess) {
-                  print(state.reunions.length);
+                if (state is GetAbsencesSuccess) {
                   setState(() {
-                    _reunions.value = state.reunions;
+                    _allAbsences = state.absences;
                   });
                 }
               },
               child: const SizedBox(),
             ),
-            ValueListenableBuilder<List<ReunionModel>>(
-              valueListenable: _reunions,
+            ValueListenableBuilder<List<AbsenceModel>>(
+              valueListenable: _absences,
               builder: (context, value, child) {
-                return _reunions.value.isNotEmpty
+                return _absences.value.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
-                        itemCount: _reunions.value.length,
-                        itemBuilder: (context, index) => ReunionTimeSlot(
-                          reunion: _reunions.value[index],
+                        itemCount: _absences.value.length,
+                        itemBuilder: (context, index) => AbsenceTimeSlot(
+                          absence: _absences.value[index],
                         ),
                       )
                     : Column(
@@ -121,7 +122,7 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
                             ),
                           ),
                           const Text(
-                            "Aucun Reunion",
+                            "Aucune Absence",
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w700,

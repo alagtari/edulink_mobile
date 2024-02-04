@@ -1,41 +1,43 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:edulink_mobile/features/calendar/data/models/reunion_model.dart';
-import 'package:edulink_mobile/features/calendar/presentation/bloc/reunion/reunions_bloc.dart';
-import 'package:edulink_mobile/features/calendar/presentation/widgets/reunion_time_slot.dart';
+import 'package:edulink_mobile/features/calendar/data/models/exercice_model.dart';
+import 'package:edulink_mobile/features/calendar/presentation/bloc/exercice/exercices_bloc.dart';
+import 'package:edulink_mobile/features/calendar/presentation/widgets/exercice_time_slot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 @RoutePage()
-class ReunionTimeSlots extends StatefulWidget implements AutoRouteWrapper {
+class ExerciceTimeSlots extends StatefulWidget implements AutoRouteWrapper {
   final ValueNotifier<DateTime> date;
 
-  const ReunionTimeSlots({
+  const ExerciceTimeSlots({
     super.key,
     required this.date,
   });
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => ReunionsBloc()
-          ..add(GetReunionsEvent(
-              date: DateFormat('yyyy-MM-dd').format(date.value))),
+        create: (_) => ExercicesBloc()..add(GetExercicesEvent()),
         child: this,
       );
   @override
-  State<ReunionTimeSlots> createState() => _ReunionTimeSlotsState();
+  State<ExerciceTimeSlots> createState() => _ExerciceTimeSlotsState();
 }
 
-class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
-  late ValueNotifier<List<ReunionModel>> _reunions;
+class _ExerciceTimeSlotsState extends State<ExerciceTimeSlots> {
+  late ValueNotifier<List<ExerciceModel>> _exercices;
+  late List<ExerciceModel> _allExercices;
   @override
   void initState() {
-    _reunions = ValueNotifier<List<ReunionModel>>([]);
+    _exercices = ValueNotifier<List<ExerciceModel>>([]);
+    _allExercices = [];
     widget.date.addListener(() {
       String formattedDate = DateFormat('yyyy-MM-dd').format(widget.date.value);
-      context.read<ReunionsBloc>().add(GetReunionsEvent(date: formattedDate));
+      List<ExerciceModel> filteredExercises = _allExercices
+          .where((exercise) => exercise.dateL == formattedDate)
+          .toList();
+      _exercices.value = filteredExercises;
+      context.read<ExercicesBloc>().add(GetExercicesEvent());
     });
     super.initState();
   }
@@ -47,8 +49,8 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            ValueListenableBuilder<List<ReunionModel>>(
-              valueListenable: _reunions,
+            ValueListenableBuilder<List<ExerciceModel>>(
+              valueListenable: _exercices,
               builder: (context, value, child) => value.isNotEmpty
                   ? Row(
                       children: [
@@ -69,7 +71,7 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
                           width: 35,
                         ),
                         const Text(
-                          'Reunions',
+                          'Exercices',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Color(0xFFBCC1CD),
@@ -85,26 +87,25 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
             const SizedBox(
               height: 20,
             ),
-            BlocListener<ReunionsBloc, ReunionsState>(
+            BlocListener<ExercicesBloc, ExercicesState>(
               listener: (context, state) {
-                if (state is GetReunionsSuccess) {
-                  print(state.reunions.length);
+                if (state is GetExercicesSuccess) {
                   setState(() {
-                    _reunions.value = state.reunions;
+                    _allExercices = state.exercices;
                   });
                 }
               },
               child: const SizedBox(),
             ),
-            ValueListenableBuilder<List<ReunionModel>>(
-              valueListenable: _reunions,
+            ValueListenableBuilder<List<ExerciceModel>>(
+              valueListenable: _exercices,
               builder: (context, value, child) {
-                return _reunions.value.isNotEmpty
+                return _exercices.value.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
-                        itemCount: _reunions.value.length,
-                        itemBuilder: (context, index) => ReunionTimeSlot(
-                          reunion: _reunions.value[index],
+                        itemCount: _exercices.value.length,
+                        itemBuilder: (context, index) => ExerciceTimeSlot(
+                          exercice: _exercices.value[index],
                         ),
                       )
                     : Column(
@@ -121,7 +122,7 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
                             ),
                           ),
                           const Text(
-                            "Aucun Reunion",
+                            "Aucun Exercice",
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w700,
