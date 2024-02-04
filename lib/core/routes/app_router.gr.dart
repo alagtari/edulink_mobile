@@ -41,7 +41,7 @@ import 'package:edulink_mobile/features/events/presentation/views/events.dart'
     as _i9;
 import 'package:edulink_mobile/forget_password.dart' as _i11;
 import 'package:edulink_mobile/home.dart' as _i12;
-import 'package:edulink_mobile/payment.dart' as _i15;
+import 'package:edulink_mobile/features/payment/presentation/views/payment.dart' as _i15;
 import 'package:edulink_mobile/rooms.dart' as _i17;
 import 'package:flutter/material.dart' as _i19;
 

@@ -22,6 +22,9 @@ import 'package:edulink_mobile/features/club/domain/repositories/clubs_repositor
 import 'package:edulink_mobile/features/events/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/events/data/repositories/events_repository_impl.dart';
 import 'package:edulink_mobile/features/events/domain/repositories/events_repository.dart';
+import 'package:edulink_mobile/features/payment/data/data_sources/remote_data_source.dart';
+import 'package:edulink_mobile/features/payment/data/repositories/tranches_repository_impl.dart';
+import 'package:edulink_mobile/features/payment/domain/repositories/tranches_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -85,5 +88,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AbsenceRepository>(
     () => AbsenceRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<TrancheOnlineDataSource>(
+    () => TrancheOnlineDataSourceImpl(),
+  );
+  sl.registerLazySingleton<TranchesRepository>(
+    () => TranchesRepositoryImpl(dataSource: sl()),
   );
 }

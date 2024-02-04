@@ -19,34 +19,57 @@ class _HomeState extends State<Home> {
     return Scaffold(
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
-        onTap: (i) => setState(() => _currentIndex = i),
+        onTap: (i) {
+          switch (i) {
+            case 1:
+              context.router.push(
+                const Bulletin(),
+              );
+              break;
+            case 2:
+              context.router.push(
+                const Payment(),
+              );
+              break;
+            case 3:
+              context.router.push(
+                const Bulletin(),
+              );
+              break;
+
+            default:
+              // Handle other cases if needed
+              break;
+          }
+          setState(() => _currentIndex = i);
+        },
         items: [
           /// Home
           SalomonBottomBarItem(
             icon: const Icon(Icons.home),
             title: const Text("Home"),
-            selectedColor: Colors.purple,
+            selectedColor: Colors.pink,
           ),
 
           /// Likes
           SalomonBottomBarItem(
-            icon: const Icon(Icons.favorite_border),
-            title: const Text("Likes"),
+            icon: const Icon(Icons.library_books),
+            title: const Text("Bulletin"),
             selectedColor: Colors.pink,
           ),
 
           /// Search
           SalomonBottomBarItem(
-            icon: const Icon(Icons.search),
-            title: const Text("Search"),
-            selectedColor: Colors.orange,
+            icon: const Icon(Icons.payment),
+            title: const Text("Paiment"),
+            selectedColor: Colors.pink,
           ),
 
           /// Profile
           SalomonBottomBarItem(
             icon: const Icon(Icons.person),
             title: const Text("Profile"),
-            selectedColor: Colors.teal,
+            selectedColor: Colors.pink,
           ),
         ],
       ),
