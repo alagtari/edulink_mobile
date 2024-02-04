@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i18;
-import 'package:edulink_mobile/bulletin.dart' as _i2;
+import 'package:edulink_mobile/features/bulletin/presentation/views/bulletin.dart' as _i2;
 import 'package:edulink_mobile/chat.dart' as _i5;
 import 'package:edulink_mobile/features/auth/login/presentation/views/login.dart'
     as _i13;

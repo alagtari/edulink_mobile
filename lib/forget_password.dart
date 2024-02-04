@@ -31,16 +31,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      padding: const EdgeInsets.only(left: 7),
-                      decoration: const BoxDecoration(
-                          color: Color(0x43FF5652),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: const Center(
-                        child: Icon(Icons.arrow_back_ios,
-                            size: 23, color: Color(0xFFFF5652)),
+                    child: GestureDetector(
+                      onTap: () => context.router.pop(),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.only(left: 7),
+                        decoration: const BoxDecoration(
+                            color: Color(0x43FF5652),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: const Center(
+                          child: Icon(Icons.arrow_back_ios,
+                              size: 23, color: Color(0xFFFF5652)),
+                        ),
                       ),
                     ),
                   ),

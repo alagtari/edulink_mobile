@@ -313,35 +313,39 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     const Expanded(child: SizedBox()),
-                    Container(
-                      height: MediaQuery.of(context).size.height * .2,
-                      width: MediaQuery.of(context).size.width * .425,
-                      decoration: const BoxDecoration(
-                          color: Color(0x4AFA7193),
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image(
-                            width: 75.0,
-                            height: 75.0,
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/images/chat.png"),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'chat',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Raleway',
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none),
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: () => context.router.push(const Rooms()),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * .2,
+                        width: MediaQuery.of(context).size.width * .425,
+                        decoration: const BoxDecoration(
+                            color: Color(0x4AFA7193),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(
+                              width: 75.0,
+                              height: 75.0,
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/chat.png"),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              'chat',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Raleway',
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.none),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],

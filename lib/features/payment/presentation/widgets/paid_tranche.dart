@@ -1,8 +1,12 @@
+import 'package:edulink_mobile/core/util/utils.dart';
+import 'package:edulink_mobile/features/payment/data/models/tranche_model.dart';
 import 'package:flutter/material.dart';
 
 class PaidTranche extends StatelessWidget {
+  final TrancheModel tranche;
   const PaidTranche({
     super.key,
+    required this.tranche,
   });
 
   @override
@@ -44,17 +48,17 @@ class PaidTranche extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 7),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(200, 0, 174, 219),
                   borderRadius: BorderRadius.all(
                     Radius.circular(50),
                   ),
                 ),
-                child: const Text(
-                  'tranche',
-                  style: TextStyle(
+                child: Text(
+                  tranche.nomTranche.capitalize(),
+                  style: const TextStyle(
                     fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -64,19 +68,19 @@ class PaidTranche extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const Row(
+              Row(
                 children: [
                   Text(
-                    '100 TND',
-                    style: TextStyle(
+                    "${tranche.montantTranche} TND",
+                    style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
                         letterSpacing: -1.5),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Text(
+                  const Text(
                     ' / par tranche',
                     style: TextStyle(
                         fontSize: 15,

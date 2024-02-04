@@ -17,17 +17,20 @@ class Chat extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        padding: const EdgeInsets.only(left: 7),
-                        decoration: const BoxDecoration(
-                            color: Color(0x43FF5652),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: const Center(
-                          child: Icon(Icons.arrow_back_ios,
-                              size: 23, color: Color(0xFFFF5652)),
+                      GestureDetector(
+                        onTap: () => context.router.pop(),
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.only(left: 7),
+                          decoration: const BoxDecoration(
+                              color: Color(0x43FF5652),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: const Center(
+                            child: Icon(Icons.arrow_back_ios,
+                                size: 23, color: Color(0xFFFF5652)),
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -87,7 +90,7 @@ class Chat extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'hello this is a message from an admiin',
+                                  'hello this is a message from an admin',
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 45, 45, 45),
                                     fontSize: 17,

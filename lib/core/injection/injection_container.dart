@@ -4,6 +4,9 @@ import 'package:edulink_mobile/core/common_used/dio_provider.dart';
 import 'package:edulink_mobile/features/auth/login/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/auth/login/data/repositories/auth_repository_impl.dart';
 import 'package:edulink_mobile/features/auth/login/domain/repositories/auth_repository.dart';
+import 'package:edulink_mobile/features/bulletin/data/data_sources/remote_data_source.dart';
+import 'package:edulink_mobile/features/bulletin/data/repositories/notes_repository_impl.dart';
+import 'package:edulink_mobile/features/bulletin/domain/repositories/notes_repository.dart';
 import 'package:edulink_mobile/features/calendar/data/data_sources/absence_remote_data_source.dart';
 import 'package:edulink_mobile/features/calendar/data/data_sources/exercice_remote_data_source.dart';
 import 'package:edulink_mobile/features/calendar/data/data_sources/reunion_remote_data_source.dart';
@@ -95,5 +98,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<TranchesRepository>(
     () => TranchesRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<NotesOnlineDataSource>(
+    () => NotesOnlineDataSourceImpl(),
+  );
+  sl.registerLazySingleton<NotesRepository>(
+    () => NotesRepositoryImpl(dataSource: sl()),
   );
 }

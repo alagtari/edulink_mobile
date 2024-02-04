@@ -225,17 +225,21 @@ class _LoginState extends State<Login> {
                           const SizedBox(
                             height: 15,
                           ),
-                          const Text(
-                            'Mot de passe oublié ?',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                                fontFamily: 'Raleway',
-                                fontSize: 16,
-                                letterSpacing:
-                                    0 /*percentages not used in flutter. defaulting to zero*/,
-                                fontWeight: FontWeight.normal,
-                                decoration: TextDecoration.none),
+                          GestureDetector(
+                            onTap: () =>
+                                context.router.push(const ForgetPassword()),
+                            child: const Text(
+                              'Mot de passe oublié ?',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  fontFamily: 'Raleway',
+                                  fontSize: 16,
+                                  letterSpacing:
+                                      0 /*percentages not used in flutter. defaulting to zero*/,
+                                  fontWeight: FontWeight.normal,
+                                  decoration: TextDecoration.none),
+                            ),
                           )
                         ],
                       ),

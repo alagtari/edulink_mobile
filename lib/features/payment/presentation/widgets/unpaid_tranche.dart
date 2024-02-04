@@ -1,8 +1,11 @@
+import 'package:edulink_mobile/features/payment/data/models/tranche_model.dart';
 import 'package:flutter/material.dart';
 
 class UnpaidTranche extends StatelessWidget {
+  final TrancheModel tranche;
   const UnpaidTranche({
     super.key,
+    required this.tranche,
   });
 
   @override
@@ -47,17 +50,17 @@ class UnpaidTranche extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 7),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(200, 255, 85, 82),
                   borderRadius: BorderRadius.all(
                     Radius.circular(50),
                   ),
                 ),
-                child: const Text(
-                  'tranche',
-                  style: TextStyle(
+                child: Text(
+                  tranche.nomTranche,
+                  style: const TextStyle(
                     fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -67,11 +70,11 @@ class UnpaidTranche extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const Row(
+              Row(
                 children: [
                   Text(
-                    '100 TND',
-                    style: TextStyle(
+                    "${tranche.montantTranche} TND",
+                    style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
                         letterSpacing: -1.5),
@@ -79,7 +82,7 @@ class UnpaidTranche extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text(
+                  const Text(
                     ' / par tranche',
                     style: TextStyle(
                         fontSize: 15,

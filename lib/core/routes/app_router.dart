@@ -22,11 +22,10 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: Club.page),
         AutoRoute(page: Clubs.page),
         AutoRoute(page: ForgetPassword.page),
-        AutoRoute(
-          page: Home.page,
-          // guards: [AuthGuard()],
-        ),
-        AutoRoute(page: Login.page, initial: true),
+        AutoRoute(page: Home.page, initial: true
+            // guards: [AuthGuard()],
+            ),
+        AutoRoute(page: Login.page),
         AutoRoute(page: Payment.page),
       ];
 }

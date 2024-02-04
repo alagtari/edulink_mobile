@@ -42,15 +42,19 @@ class Payment extends StatelessWidget implements AutoRouteWrapper {
                       itemCount: state.tranches.length,
                       itemBuilder: (context, index) {
                         final TrancheModel tranche = state.tranches[index];
-                        return tranche.paid ? PaidTranche() : UnpaidTranche();
+                        return tranche.paid
+                            ? PaidTranche(
+                                tranche: tranche,
+                              )
+                            : UnpaidTranche(
+                                tranche: tranche,
+                              );
                       },
                     );
                   }
-                  return SizedBox();
+                  return const SizedBox();
                 },
               ),
-              // UnpaidTranche(),
-              // PaidTranche()
             ],
           ),
         ),
