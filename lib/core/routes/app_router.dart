@@ -27,5 +27,6 @@ class AppRouter extends $AppRouter {
             ),
         AutoRoute(page: Login.page),
         AutoRoute(page: Payment.page),
+        AutoRoute(page: Emploi.page),
       ];
 }

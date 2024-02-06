@@ -7,9 +7,9 @@ class AppPrefs {
 
   String? getToken() => prefs.getString(_token);
   String? getPrenom() => prefs.getString(_prenom);
-  String? getClasseId() => prefs.getString(_classeId);
-  String? getId() => prefs.getString(_id);
-  String? getOrganisationId() => prefs.getString(_organisationId);
+  int? getClasseId() => prefs.getInt(_classeId);
+  int? getId() => prefs.getInt(_id);
+  int? getOrganisationId() => prefs.getInt(_organisationId);
 
   Future<void> saveToken(String token) => prefs.setString(_token, token);
   Future<void> saveId(int id) => prefs.setInt(_id, id);

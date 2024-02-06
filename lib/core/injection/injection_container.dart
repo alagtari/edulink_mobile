@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:edulink_mobile/core/common_used/app_prefs.dart';
 import 'package:edulink_mobile/core/common_used/dio_provider.dart';
+import 'package:edulink_mobile/core/common_used/pusher.dart';
 import 'package:edulink_mobile/features/auth/login/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/auth/login/data/repositories/auth_repository_impl.dart';
 import 'package:edulink_mobile/features/auth/login/domain/repositories/auth_repository.dart';
@@ -19,6 +20,9 @@ import 'package:edulink_mobile/features/calendar/domain/repositories/reunions_re
 import 'package:edulink_mobile/features/cantine/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/cantine/data/repositories/meals_repository_impl.dart';
 import 'package:edulink_mobile/features/cantine/domain/repositories/meals_repository.dart';
+import 'package:edulink_mobile/features/chat/data/data_sources/remote_data_source.dart';
+import 'package:edulink_mobile/features/chat/data/repositories/chat_repository_impl.dart';
+import 'package:edulink_mobile/features/chat/domain/repositories/chat_repository.dart';
 import 'package:edulink_mobile/features/club/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/club/data/repositories/clubs_repository_impl.dart';
 import 'package:edulink_mobile/features/club/domain/repositories/clubs_repository.dart';
@@ -39,6 +43,11 @@ Future<void> init() async {
   sl.registerLazySingleton<AppPrefs>(
     () => AppPrefs(prefs),
   );
+
+  sl.registerLazySingleton<PusherService>(
+    () => PusherService(),
+  );
+
   sl.registerLazySingleton<Dio>(
     () => DioProvider.instance(),
   );
@@ -105,5 +114,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<NotesRepository>(
     () => NotesRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<ChatOnlineDataSource>(
+    () => ChatOnlineDataSourceImpl(),
+  );
+  sl.registerLazySingleton<ChatRepository>(
+    () => ChatRepositoryImpl(dataSource: sl()),
   );
 }
