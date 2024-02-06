@@ -37,7 +37,7 @@ class _MeesagesState extends State<Meesages> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.only(bottom: 15),
+      padding:const EdgeInsets.only(bottom: 15),
       shrinkWrap: true,
       controller: _scrollController,
       itemCount: widget.messages.length,

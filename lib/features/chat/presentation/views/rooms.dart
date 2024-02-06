@@ -1,4 +1,5 @@
 import 'package:edulink_mobile/common_widgets/header/header.dart';
+import 'package:edulink_mobile/core/common_used/pusher.dart';
 import 'package:edulink_mobile/core/routes/app_router.gr.dart';
 import 'package:edulink_mobile/features/chat/data/models/room_model.dart';
 import 'package:edulink_mobile/features/chat/presentation/bloc/chat_bloc.dart';
@@ -8,14 +9,39 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class Rooms extends StatelessWidget implements AutoRouteWrapper {
+class Rooms extends StatefulWidget implements AutoRouteWrapper {
   const Rooms({Key? key}) : super(key: key);
-
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
         create: (_) => ChatBloc()..add(GetRoomsEvent()),
         child: this,
       );
+  @override
+  State<Rooms> createState() => _RoomsState();
+}
+
+class _RoomsState extends State<Rooms> {
+  late PusherService _pusherService;
+
+  @override
+  void initState() {
+    initPusher();
+    super.initState();
+  }
+
+  Future<void> initPusher() async {
+    await _pusherService.initPusher();
+  }
+
+  Future<void> disconnectPusher() async {
+    await _pusherService.disconnect();
+  }
+
+  @override
+  void dispose() {
+    disconnectPusher();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

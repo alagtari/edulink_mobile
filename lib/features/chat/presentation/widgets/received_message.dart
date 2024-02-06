@@ -11,7 +11,7 @@ class ReceivedMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.only(top: 2),
+        margin: const EdgeInsets.only(top: 5),
         constraints: const BoxConstraints(maxWidth: 250, minWidth: 100),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: const BoxDecoration(

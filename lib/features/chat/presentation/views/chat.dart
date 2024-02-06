@@ -42,11 +42,11 @@ class _ChatState extends State<Chat> {
   void initState() {
     messageController = TextEditingController();
     _pusherService = sl<PusherService>();
-    initializePusher();
+    subscribeChat();
     super.initState();
   }
 
-  Future<void> initializePusher() async {
+  Future<void> subscribeChat() async {
     final organisationId = _prefs.getOrganisationId();
     final id = _prefs.getId();
     late String roomId;
@@ -55,8 +55,6 @@ class _ChatState extends State<Chat> {
     } else {
       roomId = "${id}_${widget.room.id}_0";
     }
-    await _pusherService.initPusher();
-
     await _pusherService.subscribePusher('chat.$roomId');
   }
 
@@ -77,12 +75,6 @@ class _ChatState extends State<Chat> {
         messageController.text = "";
       });
     }
-  }
-
-  @override
-  void dispose() {
-    _pusherService.disconnect();
-    super.dispose();
   }
 
   @override
@@ -164,13 +156,7 @@ class _ChatState extends State<Chat> {
                       }
                       final messages = snapshot.data ?? <MessageModel>[];
                       if (messages.isEmpty) {
-                        return const Center(
-                          child: Icon(
-                            Icons.mark_chat_unread_outlined,
-                            size: 128,
-                            color: Color(0xffF5F6F7),
-                          ),
-                        );
+                        return const SizedBox();
                       }
 
                       return Meesages(messages: messages);
@@ -210,8 +196,11 @@ class _ChatState extends State<Chat> {
                       width: 40,
                       height: 40,
                       decoration: const BoxDecoration(
-                          color: Color(0x43FF5652),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                        color: Color(0x43FF5652),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
                       child: const Center(
                           child: Icon(
                         Icons.send,
