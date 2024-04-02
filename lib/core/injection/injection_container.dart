@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:edulink_mobile/core/common_used/app_prefs.dart';
 import 'package:edulink_mobile/core/common_used/dio_provider.dart';
 import 'package:edulink_mobile/core/common_used/pusher.dart';
+import 'package:edulink_mobile/core/routes/app_router.dart';
 import 'package:edulink_mobile/features/auth/login/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/auth/login/data/repositories/auth_repository_impl.dart';
 import 'package:edulink_mobile/features/auth/login/domain/repositories/auth_repository.dart';
@@ -26,6 +27,9 @@ import 'package:edulink_mobile/features/chat/domain/repositories/chat_repository
 import 'package:edulink_mobile/features/club/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/club/data/repositories/clubs_repository_impl.dart';
 import 'package:edulink_mobile/features/club/domain/repositories/clubs_repository.dart';
+import 'package:edulink_mobile/features/emploi/data/data_sources/remote_data_source.dart';
+import 'package:edulink_mobile/features/emploi/data/repositories/emploi_repository_impl.dart';
+import 'package:edulink_mobile/features/emploi/domain/repositories/emploi_repository.dart';
 import 'package:edulink_mobile/features/events/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/events/data/repositories/events_repository_impl.dart';
 import 'package:edulink_mobile/features/events/domain/repositories/events_repository.dart';
@@ -42,6 +46,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AppPrefs>(
     () => AppPrefs(prefs),
+  );
+  sl.registerLazySingleton<AppRouter>(
+    () => AppRouter(),
   );
 
   sl.registerLazySingleton<PusherService>(
@@ -121,5 +128,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<ChatRepository>(
     () => ChatRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<EmploiOnlineDataSource>(
+    () => EmploiOnlineDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmploiRepository>(
+    () => EmploiRepositoryImpl(dataSource: sl()),
   );
 }

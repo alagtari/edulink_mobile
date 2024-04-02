@@ -42,13 +42,13 @@ class Header extends StatelessWidget {
           height: 40,
           width: 40,
           // padding: EdgeInsets.only(left: 8),
-          decoration: const BoxDecoration(
-              color: Color(0x43FF5652),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: const Center(
-            child: Icon(Icons.notifications_outlined,
-                size: 25, color: Color(0xFFFF5652)),
-          ),
+          // decoration: const BoxDecoration(
+          //     color: Color(0x43FF5652),
+          //     borderRadius: BorderRadius.all(Radius.circular(10))),
+          // child: const Center(
+          //   child: Icon(Icons.notifications_outlined,
+          //       size: 25, color: Color(0xFFFF5652)),
+          // ),
         )
       ],
     );

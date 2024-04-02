@@ -63,7 +63,7 @@ class _LoginState extends State<Login> {
             child: BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
-                  context.router.push(const Home());
+                  context.router.replace(const Home());
                 }
               },
               child: Form(

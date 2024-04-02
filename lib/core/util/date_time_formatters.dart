@@ -1,5 +1,5 @@
-import 'package:edulink_mobile/core/util/utils.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
+
 import 'package:intl/intl.dart';
 
 String formatDate(DateTime dateTime) {
@@ -10,6 +10,11 @@ String formatDate(DateTime dateTime) {
 String formatTime(DateTime dateTime) {
   String formattedTime = DateFormat.Hm().format(dateTime);
   return formattedTime;
+}
+
+String formatMessageTime(DateTime dateTime) {
+  DateTime date = dateTime;
+  return '${date.hour + 1}:${date.minute < 9 ? "0" : ""}${date.minute}';
 }
 
 String formatTimeString(String time) {

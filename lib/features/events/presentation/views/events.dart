@@ -32,18 +32,20 @@ class Events extends StatelessWidget implements AutoRouteWrapper {
               const SizedBox(
                 height: 40,
               ),
-              BlocBuilder<EventsBloc, EventState>(builder: (context, state) {
-                if (state is GetEventsSuccess) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.events.length,
-                    itemBuilder: (context, i) => EventCard(
-                      event: state.events[i],
-                    ),
-                  );
-                }
-                return const SizedBox();
-              })
+              Expanded(
+                child: BlocBuilder<EventsBloc, EventState>(builder: (context, state) {
+                  if (state is GetEventsSuccess) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.events.length,
+                      itemBuilder: (context, i) => EventCard(
+                        event: state.events[i],
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                }),
+              )
             ],
           ),
         ),

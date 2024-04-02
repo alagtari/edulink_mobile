@@ -5,12 +5,14 @@ import 'package:edulink_mobile/core/injection/injection_container.dart';
 import 'package:edulink_mobile/features/calendar/data/models/exercice_model.dart';
 
 abstract class ExerciceOnlineDataSource {
-  Future<ResponseWrapper<List<ExerciceModel>>> getExercices();
+  Future<ResponseWrapper<List<ExerciceModel>>> getExercices(
+      {required String date});
 }
 
 class ExerciceOnlineDataSourceImpl implements ExerciceOnlineDataSource {
   @override
-  Future<ResponseWrapper<List<ExerciceModel>>> getExercices() async {
+  Future<ResponseWrapper<List<ExerciceModel>>> getExercices(
+      {required String date}) async {
     final res = await sl<Dio>().get("/exercices/index");
 
     if (res.statusCode == 200) {
@@ -18,9 +20,13 @@ class ExerciceOnlineDataSourceImpl implements ExerciceOnlineDataSource {
         return ResponseWrapper<List<ExerciceModel>>.fromJson(true, res.data,
             (p0) {
           List<ExerciceModel> exercices = [];
+          ExerciceModel exerciceModel;
           for (var exercice in (p0 as List)) {
             try {
-              exercices.add(ExerciceModel.fromJson(exercice));
+              exerciceModel = ExerciceModel.fromJson(exercice);
+              if (exerciceModel.dateL == date) {
+                exercices.add(exerciceModel);
+              }
             } catch (e) {
               continue;
             }

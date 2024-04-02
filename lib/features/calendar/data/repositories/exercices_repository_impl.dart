@@ -17,9 +17,9 @@ class ExerciceRepositoryImpl implements ExerciceRepository {
 
   @override
   Future<Either<Failure, ResponseWrapper<List<ExerciceModel>>>>
-      getExercices() async {
+      getExercices({required String date }) async {
     try {
-      final res = await dataSource.getExercices();
+      final res = await dataSource.getExercices(date : date);
       return right(res);
     } catch (_) {
       return left(UnknownFailure());

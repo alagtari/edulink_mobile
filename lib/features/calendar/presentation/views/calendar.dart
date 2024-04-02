@@ -1,15 +1,37 @@
 import 'package:edulink_mobile/common_widgets/header/header.dart';
-import 'package:edulink_mobile/core/routes/app_router.gr.dart';
+import 'package:edulink_mobile/features/calendar/presentation/bloc/absence/absences_bloc.dart';
+import 'package:edulink_mobile/features/calendar/presentation/bloc/exercice/exercices_bloc.dart';
+import 'package:edulink_mobile/features/calendar/presentation/bloc/reunion/reunions_bloc.dart';
+import 'package:edulink_mobile/features/calendar/presentation/views/absence_time_slots.dart';
+import 'package:edulink_mobile/features/calendar/presentation/views/exercice_time_slots.dart';
+import 'package:edulink_mobile/features/calendar/presentation/views/reunion_time_slots.dart';
 import 'package:edulink_mobile/features/calendar/presentation/widgets/normal_day.dart';
 import 'package:edulink_mobile/features/calendar/presentation/widgets/selected_day.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
-class Calendar extends StatefulWidget {
+class Calendar extends StatefulWidget implements AutoRouteWrapper {
   const Calendar({Key? key}) : super(key: key);
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<ExercicesBloc>(
+            create: (BuildContext context) => ExercicesBloc(),
+          ),
+          BlocProvider<ReunionsBloc>(
+            create: (BuildContext context) => ReunionsBloc(),
+          ),
+          BlocProvider<AbsencesBloc>(
+            create: (BuildContext context) => AbsencesBloc(),
+          ),
+        ],
+        child: this,
+      );
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -24,23 +46,23 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     _focusedDay = ValueNotifier(DateTime.now());
     _selectedDay = DateTime.now();
-    _value = ValueNotifier<String>('2');
-    _value.addListener(() {
+    _value = ValueNotifier<String>('1');
+    _focusedDay.addListener(() {
       switch (_value.value) {
         case "1":
-          context.router.push(
-            ReunionTimeSlots(date: _focusedDay),
-          );
+          context.read<ReunionsBloc>().add(GetReunionsEvent(
+                date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
+              ));
           break;
         case "2":
-          context.router.push(
-            ExerciceTimeSlots(date: _focusedDay),
-          );
+          context.read<ExercicesBloc>().add(GetExercicesEvent(
+                date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
+              ));
           break;
         case "3":
-          context.router.push(
-            AbsenceTimeSlots(date: _focusedDay),
-          );
+          context.read<AbsencesBloc>().add(GetAbsencesEvent(
+                date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
+              ));
           break;
 
         default:
@@ -271,8 +293,31 @@ class _CalendarState extends State<Calendar> {
                           ),
                         ),
                       ),
-                      const Expanded(
-                        child: AutoRouter(),
+                      Expanded(
+                        child: ValueListenableBuilder<String>(
+                          valueListenable: _value,
+                          builder: (context, calendarValue, child) {
+                            return ValueListenableBuilder<DateTime>(
+                              valueListenable: _focusedDay,
+                              builder: (context, dateValue, child) {
+                                switch (calendarValue) {
+                                  case '2':
+                                    return ExerciceTimeSlots(
+                                      date: dateValue,
+                                    );
+                                  case '3':
+                                    return AbsenceTimeSlots(
+                                      date: _focusedDay,
+                                    );
+                                  default:
+                                    return ReunionTimeSlots(
+                                      date: _focusedDay,
+                                    );
+                                }
+                              },
+                            );
+                          },
+                        ),
                       )
                     ],
                   ),

@@ -4,5 +4,5 @@ import 'package:edulink_mobile/core/errors/failures.dart';
 import 'package:edulink_mobile/features/calendar/data/models/absence_model.dart';
 
 abstract class AbsenceRepository {
-  Future<Either<Failure, ResponseWrapper<List<AbsenceModel>>>> getAbsences();
+  Future<Either<Failure, ResponseWrapper<List<AbsenceModel>>>> getAbsences({required String date});
 }

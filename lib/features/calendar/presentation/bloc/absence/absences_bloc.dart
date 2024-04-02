@@ -14,7 +14,7 @@ class AbsencesBloc extends Bloc<AbsencesEvent, AbsencesState> {
     on<GetAbsencesEvent>(
       (event, emit) async {
         emit(GetAbsencesLoading());
-        final res = await _repo.getAbsences();
+        final res = await _repo.getAbsences(date:event.date);
         res.fold(
           (l) => emit(GetAbsencesFailed()),
           (r) {

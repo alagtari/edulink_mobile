@@ -21,27 +21,6 @@ class Rooms extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _RoomsState extends State<Rooms> {
-  late PusherService _pusherService;
-
-  @override
-  void initState() {
-    initPusher();
-    super.initState();
-  }
-
-  Future<void> initPusher() async {
-    await _pusherService.initPusher();
-  }
-
-  Future<void> disconnectPusher() async {
-    await _pusherService.disconnect();
-  }
-
-  @override
-  void dispose() {
-    disconnectPusher();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -32,18 +32,20 @@ class Clubs extends StatelessWidget implements AutoRouteWrapper {
               const SizedBox(
                 height: 40,
               ),
-              BlocBuilder<ClubsBloc, ClubState>(builder: (context, state) {
-                if (state is GetClubsSuccess) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.clubs.length,
-                    itemBuilder: (context, i) => CubCard(
-                      club: state.clubs[i],
-                    ),
-                  );
-                }
-                return const SizedBox();
-              })
+              Expanded(
+                child: BlocBuilder<ClubsBloc, ClubState>(builder: (context, state) {
+                  if (state is GetClubsSuccess) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.clubs.length,
+                      itemBuilder: (context, i) => CubCard(
+                        club: state.clubs[i],
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                }),
+              )
             ],
           ),
         ),

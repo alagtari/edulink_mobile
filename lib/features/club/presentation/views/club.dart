@@ -35,7 +35,7 @@ class Club extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
                       image: DecorationImage(
                           image: NetworkImage(
-                            "http://localhost:8000/uploads/club/${club.image}",
+                            "https://edulinkbackend.edulink.tn/uploads/club/${club.image}",
                           ),
                           fit: BoxFit.cover),
                     ),

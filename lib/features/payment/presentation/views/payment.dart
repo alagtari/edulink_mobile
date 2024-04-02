@@ -34,26 +34,28 @@ class Payment extends StatelessWidget implements AutoRouteWrapper {
               const SizedBox(
                 height: 20,
               ),
-              BlocBuilder<TranchesBloc, TrancheState>(
-                builder: (context, state) {
-                  if (state is GetTranchesSuccess) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.tranches.length,
-                      itemBuilder: (context, index) {
-                        final TrancheModel tranche = state.tranches[index];
-                        return tranche.paid
-                            ? PaidTranche(
-                                tranche: tranche,
-                              )
-                            : UnpaidTranche(
-                                tranche: tranche,
-                              );
-                      },
-                    );
-                  }
-                  return const SizedBox();
-                },
+              Expanded(
+                child: BlocBuilder<TranchesBloc, TrancheState>(
+                  builder: (context, state) {
+                    if (state is GetTranchesSuccess) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.tranches.length,
+                        itemBuilder: (context, index) {
+                          final TrancheModel tranche = state.tranches[index];
+                          return tranche.paid
+                              ? PaidTranche(
+                                  tranche: tranche,
+                                )
+                              : UnpaidTranche(
+                                  tranche: tranche,
+                                );
+                        },
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
               ),
             ],
           ),

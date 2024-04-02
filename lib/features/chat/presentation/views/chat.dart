@@ -47,6 +47,7 @@ class _ChatState extends State<Chat> {
   }
 
   Future<void> subscribeChat() async {
+    await _pusherService.initPusher();
     final organisationId = _prefs.getOrganisationId();
     final id = _prefs.getId();
     late String roomId;
@@ -56,6 +57,10 @@ class _ChatState extends State<Chat> {
       roomId = "${id}_${widget.room.id}_0";
     }
     await _pusherService.subscribePusher('chat.$roomId');
+  }
+
+  Future<void> disconnectPusher() async {
+    await _pusherService.disconnect();
   }
 
   void _sendMessage() {
@@ -76,6 +81,12 @@ class _ChatState extends State<Chat> {
       });
     }
   }
+
+  // @override
+  // void dispose() {
+  //   disconnectPusher();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

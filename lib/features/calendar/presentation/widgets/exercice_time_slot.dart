@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:edulink_mobile/core/routes/app_router.gr.dart';
 import 'package:edulink_mobile/core/util/date_time_formatters.dart';
 import 'package:edulink_mobile/features/calendar/data/models/exercice_model.dart';
 import 'package:flutter/material.dart';
@@ -57,39 +59,44 @@ class ExerciceTimeSlot extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(
-              height: 100,
-              padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
-              decoration: const BoxDecoration(
-                color: Color(0xFF47BECC),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+            child: GestureDetector(
+              onTap: () {
+                context.router.push(Exercice(exercice: exercice));
+              },
+              child: Container(
+                height: 110,
+                padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF47BECC),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
                 ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        exercice.matiere,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        '${exercice.description.length > 50 ? exercice.description.substring(0, 50) : exercice.description} ...',
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ]),
               ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      exercice.matiere,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      '${exercice.description.substring(0, 55)} ...',
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Poppins',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ]),
             ),
           )
         ],

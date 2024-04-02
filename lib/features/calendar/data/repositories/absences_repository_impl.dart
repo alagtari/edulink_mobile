@@ -14,9 +14,9 @@ class AbsenceRepositoryImpl implements AbsenceRepository {
 
   @override
   Future<Either<Failure, ResponseWrapper<List<AbsenceModel>>>>
-      getAbsences() async {
+      getAbsences({required String date}) async {
     try {
-      final res = await dataSource.getAbsences();
+      final res = await dataSource.getAbsences(date:date);
       return right(res);
     } catch (_) {
       return left(UnknownFailure());

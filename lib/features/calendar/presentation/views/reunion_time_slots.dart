@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-@RoutePage()
-class ReunionTimeSlots extends StatefulWidget implements AutoRouteWrapper {
+class ReunionTimeSlots extends StatefulWidget {
   final ValueNotifier<DateTime> date;
 
   const ReunionTimeSlots({
@@ -17,13 +16,6 @@ class ReunionTimeSlots extends StatefulWidget implements AutoRouteWrapper {
     required this.date,
   });
 
-  @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => ReunionsBloc()
-          ..add(GetReunionsEvent(
-              date: DateFormat('yyyy-MM-dd').format(date.value))),
-        child: this,
-      );
   @override
   State<ReunionTimeSlots> createState() => _ReunionTimeSlotsState();
 }
@@ -33,10 +25,6 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
   @override
   void initState() {
     _reunions = ValueNotifier<List<ReunionModel>>([]);
-    widget.date.addListener(() {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(widget.date.value);
-      context.read<ReunionsBloc>().add(GetReunionsEvent(date: formattedDate));
-    });
     super.initState();
   }
 
@@ -88,7 +76,6 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
             BlocListener<ReunionsBloc, ReunionsState>(
               listener: (context, state) {
                 if (state is GetReunionsSuccess) {
-                  print(state.reunions.length);
                   setState(() {
                     _reunions.value = state.reunions;
                   });
@@ -109,16 +96,17 @@ class _ReunionTimeSlotsState extends State<ReunionTimeSlots> {
                       )
                     : Column(
                         children: [
-                          Container(
-                            height: 280,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage(
-                                  'assets/images/empty_calendar.png',
-                                ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .6,
+                            child: const Image(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                'assets/images/empty_calendar.png',
                               ),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           const Text(
                             "Aucun Reunion",

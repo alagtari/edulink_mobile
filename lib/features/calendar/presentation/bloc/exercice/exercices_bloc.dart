@@ -16,7 +16,7 @@ class ExercicesBloc extends Bloc<ExercicesEvent, ExercicesState> {
     on<GetExercicesEvent>(
       (event, emit) async {
         emit(GetExercicesLoading());
-        final res = await _repo.getExercices();
+        final res = await _repo.getExercices(date : event.date);
         res.fold(
           (l) => emit(GetExercicesFailed()),
           (r) {

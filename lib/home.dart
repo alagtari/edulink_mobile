@@ -1,4 +1,7 @@
+import 'package:edulink_mobile/core/common_used/app_prefs.dart';
+import 'package:edulink_mobile/core/injection/injection_container.dart';
 import 'package:edulink_mobile/core/routes/app_router.gr.dart';
+import 'package:edulink_mobile/core/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:auto_route/auto_route.dart';
@@ -13,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var _currentIndex = 0;
+  final String? name = sl<AppPrefs>().getPrenom();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class _HomeState extends State<Home> {
               break;
             case 3:
               context.router.push(
-                const Bulletin(),
+                const Emploi(),
               );
               break;
 
@@ -67,8 +71,8 @@ class _HomeState extends State<Home> {
 
           /// Profile
           SalomonBottomBarItem(
-            icon: const Icon(Icons.person),
-            title: const Text("Profile"),
+            icon: const Icon(Icons.calendar_month),
+            title: const Text("Emploi"),
             selectedColor: Colors.pink,
           ),
         ],
@@ -85,28 +89,11 @@ class _HomeState extends State<Home> {
                   height: 20,
                 ),
                 Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                        color: Color(0x43FF5652),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: const Center(
-                      child: Icon(
-                        Icons.notifications_outlined,
-                        size: 25,
-                        color: Color(0xFFFF5652),
-                      ),
-                    ),
-                  ),
-                ),
-                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Bonjour, Chaima 👋',
+                    'Bonjour, ${name?.capitalize()} 👋',
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black,
                         fontFamily: 'Raleway',
                         fontSize: 28,
@@ -278,7 +265,11 @@ class _HomeState extends State<Home> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () => context.router.push(const Calendar()),
+                      onTap: () {
+                        context.router.push(
+                          const Calendar(),
+                        );
+                      },
                       child: Container(
                         height: MediaQuery.of(context).size.height * .2,
                         width: MediaQuery.of(context).size.width * .425,

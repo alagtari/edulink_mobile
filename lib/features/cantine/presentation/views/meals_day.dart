@@ -33,7 +33,35 @@ class MealsDay extends StatelessWidget {
                           itemBuilder: (context, i) =>
                               MealCard(meal: meals!.meals[i]),
                         )
-                      : const SizedBox()),
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 280,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  opacity: .6,
+                                  image: AssetImage(
+                                    'assets/images/mealnotfound.png',
+                                    
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Text(
+                              "Aucun Repas",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromARGB(255, 75, 75, 75),
+                              ),
+                            )
+                          ],
+                        )),
             ],
           ),
         ),

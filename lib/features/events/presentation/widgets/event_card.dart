@@ -41,7 +41,7 @@ class EventCard extends StatelessWidget {
                 ),
                 image: DecorationImage(
                   image: NetworkImage(
-                    "http://localhost:8000/uploads/evenement/${event.image}",
+                    "https://edulinkbackend.edulink.tn/uploads/evenement/${event.image}",
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -93,7 +93,7 @@ class EventCard extends StatelessWidget {
                                 letterSpacing: 0,
                                 color: Color(0xFF46DDB9),
                                 fontFamily: 'Raleway',
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           )
                         ],

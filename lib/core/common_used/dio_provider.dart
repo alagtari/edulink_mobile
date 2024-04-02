@@ -9,7 +9,7 @@ class DioProvider {
   static Dio instance() => Dio(
         BaseOptions(
           connectTimeout: const Duration(seconds: 15),
-          baseUrl: "http://localhost:8000/api",
+          baseUrl: "https://edulinkbackend.edulink.tn/api",
           headers: {
             HttpHeaders.contentTypeHeader: "application/json",
           },

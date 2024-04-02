@@ -43,7 +43,7 @@ class ReceivedMessage extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                   color: Color.fromARGB(57, 136, 136, 136)),
               child: Text(
-                formatTime(message.createdAt),
+                formatMessageTime(message.createdAt).toString(),
                 style: const TextStyle(
                   color: Color.fromARGB(255, 45, 45, 45),
                   fontSize: 13,
