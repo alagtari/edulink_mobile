@@ -195,7 +195,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * .1,
+                            height: MediaQuery.of(context).size.height * .08,
                           ),
                           InkWell(
                             onTap: () {
