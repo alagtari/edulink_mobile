@@ -16,39 +16,36 @@ class Clubs extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * .05),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              const Header(
-                title: "Clubs",
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Expanded(
-                child: BlocBuilder<ClubsBloc, ClubState>(builder: (context, state) {
-                  if (state is GetClubsSuccess) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.clubs.length,
-                      itemBuilder: (context, i) => CubCard(
-                        club: state.clubs[i],
-                      ),
-                    );
-                  }
-                  return const SizedBox();
-                }),
-              )
-            ],
+    return Container(
+      color: const Color(0xFFF5FDFF),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * .05),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
+          const Header(
+            title: "Clubs",
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Expanded(
+            child: BlocBuilder<ClubsBloc, ClubState>(builder: (context, state) {
+              if (state is GetClubsSuccess) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.clubs.length,
+                  itemBuilder: (context, i) => CubCard(
+                    club: state.clubs[i],
+                  ),
+                );
+              }
+              return const SizedBox();
+            }),
+          )
+        ],
       ),
     );
   }

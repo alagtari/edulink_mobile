@@ -4,61 +4,46 @@ description: "A new Flutter project."
 version: 1.0.0+2
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  table_calendar: 3.0.9
-  intl: 0.18.0
-  auto_route: 7.8.4
-  get_it: 7.6.7
-  shared_preferences: 2.2.2
-  dio: 5.4.0
-  equatable: 2.0.5
-  flutter_dotenv: 5.1.0
-  flutter_screenutil: 5.9.0
-  dartz: 0.10.1
-  flutter_bloc: 8.1.3
-  bloc: ^8.1.2
-  cupertino_icons: ^1.0.2
-  salomon_bottom_bar: ^3.3.2
-  pusher_channels_flutter: ^2.2.0
-  rxdart: ^0.27.7
+  table_calendar:
+  intl:
+  auto_route:
+  get_it:
+  shared_preferences:
+  dio:
+  equatable:
+  flutter_dotenv:
+  flutter_screenutil:
+  dartz:
+  flutter_bloc:
+  bloc:
+  cupertino_icons:
+  salomon_bottom_bar:
+  pusher_channels_flutter:
+  rxdart:
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
-  auto_route_generator: ^7.3.2
-  flutter_launcher_icons: "^0.13.1"
+  flutter_lints:
+  auto_route_generator:
+  build_runner:
+  analyzer:
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/edulink_icon.jpg"
-  min_sdk_android: 21 
- 
+  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/login.png
-    - assets/images/logo.png
-    - assets/images/forgetpassword.png
-    - assets/images/actualite.png
-    - assets/images/club.png
-    - assets/images/event.png
-    - assets/images/chat.png
-    - assets/images/calendar.png
-    - assets/images/cantine.png
-    - assets/images/event-image.png
-    - assets/images/cantine1.png
-    - assets/images/cantine2.png
-    - assets/images/cantine3.png
-    - assets/images/cantine4.png
-    - assets/images/cantine5.png
-    - assets/images/cantine6.png
-    - assets/images/empty_calendar.png
-    - assets/images/mealnotfound.png
+    - assets/images/
+    - assets/svg/

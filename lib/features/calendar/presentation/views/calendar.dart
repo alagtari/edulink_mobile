@@ -99,233 +99,227 @@ class _CalendarState extends State<Calendar> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: const Color.fromARGB(255, 249, 249, 249),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * .05),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Header(
-                      title: "calendar",
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ValueListenableBuilder<DateTime>(
-                      valueListenable: _focusedDay,
-                      builder: (_, value, __) {
-                        final dayName = DateFormat.EEEE('fr_FR').format(value);
-                        final dayNumber = value.day;
-                        final monthName =
-                            DateFormat.MMMM('fr_FR').format(value);
-                        final year = value.year.toString();
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+    return Container(
+      color: const Color(0xFFF5FDFF),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * .05),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Header(
+                  title: "calendar",
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ValueListenableBuilder<DateTime>(
+                  valueListenable: _focusedDay,
+                  builder: (_, value, __) {
+                    final dayName = DateFormat.EEEE('fr_FR').format(value);
+                    final dayNumber = value.day;
+                    final monthName = DateFormat.MMMM('fr_FR').format(value);
+                    final year = value.year.toString();
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          child: Text(
+                            "${dayNumber < 10 ? "0" : ""}$dayNumber",
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                                color: Color.fromRGBO(32, 37, 37, 1),
+                                fontFamily: 'Quicksand',
+                                fontSize: 44,
+                                letterSpacing:
+                                    0 /*percentages not used in flutter. defaulting to zero*/,
+                                fontWeight: FontWeight.w600,
+                                height: 1),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 60,
-                              child: Text(
-                                "${dayNumber < 10 ? "0" : ""}$dayNumber",
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                    color: Color.fromRGBO(32, 37, 37, 1),
-                                    fontFamily: 'Quicksand',
-                                    fontSize: 44,
-                                    letterSpacing:
-                                        0 /*percentages not used in flutter. defaulting to zero*/,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1),
-                              ),
+                            Text(
+                              dayName,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(188, 193, 205, 1),
+                                  fontFamily: 'Quicksand',
+                                  fontSize: 16,
+                                  height: 1),
                             ),
                             const SizedBox(
-                              width: 5,
+                              height: 10,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  dayName,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                      color: Color.fromRGBO(188, 193, 205, 1),
-                                      fontFamily: 'Quicksand',
-                                      fontSize: 16,
-                                      height: 1),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "$monthName $year",
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                      color: Color.fromRGBO(188, 193, 205, 1),
-                                      fontFamily: 'Quicksand',
-                                      fontSize: 16,
-                                      height: 1),
-                                )
-                              ],
-                            ),
-                            const Expanded(
-                              child: SizedBox(),
-                            ),
-                            Container(
-                              width: 120,
-                              height: 50,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              decoration: const BoxDecoration(
-                                color: Color(0x2A4DC591),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              child: Center(
-                                child: DropdownButton(
-                                  value: _value.value,
-                                  items: _items,
-                                  onChanged: (String? newItem) {
-                                    setState(() {
-                                      _value.value = newItem!;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Color(0xFF4DC591),
-                                  ),
-                                  underline: Container(),
-                                ),
-                              ),
+                            Text(
+                              "$monthName $year",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(188, 193, 205, 1),
+                                  fontFamily: 'Quicksand',
+                                  fontSize: 16,
+                                  height: 1),
                             )
                           ],
+                        ),
+                        const Expanded(
+                          child: SizedBox(),
+                        ),
+                        Container(
+                          width: 120,
+                          height: 50,
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          decoration: const BoxDecoration(
+                            color: Color(0x2A4DC591),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Center(
+                            child: DropdownButton(
+                              value: _value.value,
+                              items: _items,
+                              onChanged: (String? newItem) {
+                                setState(() {
+                                  _value.value = newItem!;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Color(0xFF4DC591),
+                              ),
+                              underline: Container(),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 20),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                      width: .2, color: Color.fromARGB(255, 214, 214, 214)),
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              child: Column(
+                children: [
+                  TableCalendar(
+                    focusedDay: _focusedDay.value,
+                    headerVisible: false,
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay.value = focusedDay;
+                        });
+                        // widget.onDateSelected.call(_selectedDay!);
+                      }
+                    },
+                    locale: 'fr_FR',
+                    calendarFormat: CalendarFormat.week,
+                    firstDay: DateTime.utc(2010, 10, 16),
+                    lastDay: DateTime.utc(2030, 3, 14),
+                    calendarBuilders: CalendarBuilders(
+                      selectedBuilder: (context, day, focusedDay) {
+                        return SelectedDay(
+                          day: day,
+                        );
+                      },
+                      todayBuilder: (context, day, focusedDay) {
+                        return NormalDay(
+                          day: day,
+                        );
+                      },
+                      defaultBuilder: (context, day, focusedDay) {
+                        return NormalDay(
+                          day: day,
+                        );
+                      },
+                      outsideBuilder: (context, day, focusedDay) {
+                        return NormalDay(
+                          day: day,
+                        );
+                      },
+                      dowBuilder: (context, day) {
+                        return const SizedBox();
+                      },
+                    ),
+                    onPageChanged: (focusedDay) {
+                      _focusedDay.value = focusedDay;
+                    },
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 15),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: Color(0xFFFAF9F9),
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ValueListenableBuilder<String>(
+                      valueListenable: _value,
+                      builder: (context, calendarValue, child) {
+                        return ValueListenableBuilder<DateTime>(
+                          valueListenable: _focusedDay,
+                          builder: (context, dateValue, child) {
+                            switch (calendarValue) {
+                              case '2':
+                                return ExerciceTimeSlots(
+                                  date: dateValue,
+                                );
+                              case '3':
+                                return AbsenceTimeSlots(
+                                  date: _focusedDay,
+                                );
+                              default:
+                                return ReunionTimeSlots(
+                                  date: _focusedDay,
+                                );
+                            }
+                          },
                         );
                       },
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                      top: BorderSide(
-                          width: .2, color: Color.fromARGB(255, 214, 214, 214)),
-                    ),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      TableCalendar(
-                        focusedDay: _focusedDay.value,
-                        headerVisible: false,
-                        selectedDayPredicate: (day) {
-                          return isSameDay(_selectedDay, day);
-                        },
-                        onDaySelected: (selectedDay, focusedDay) {
-                          if (!isSameDay(_selectedDay, selectedDay)) {
-                            setState(() {
-                              _selectedDay = selectedDay;
-                              _focusedDay.value = focusedDay;
-                            });
-                            // widget.onDateSelected.call(_selectedDay!);
-                          }
-                        },
-                        locale: 'fr_FR',
-                        calendarFormat: CalendarFormat.week,
-                        firstDay: DateTime.utc(2010, 10, 16),
-                        lastDay: DateTime.utc(2030, 3, 14),
-                        calendarBuilders: CalendarBuilders(
-                          selectedBuilder: (context, day, focusedDay) {
-                            return SelectedDay(
-                              day: day,
-                            );
-                          },
-                          todayBuilder: (context, day, focusedDay) {
-                            return NormalDay(
-                              day: day,
-                            );
-                          },
-                          defaultBuilder: (context, day, focusedDay) {
-                            return NormalDay(
-                              day: day,
-                            );
-                          },
-                          outsideBuilder: (context, day, focusedDay) {
-                            return NormalDay(
-                              day: day,
-                            );
-                          },
-                          dowBuilder: (context, day) {
-                            return const SizedBox();
-                          },
-                        ),
-                        onPageChanged: (focusedDay) {
-                          _focusedDay.value = focusedDay;
-                        },
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 15),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                              color: Color(0xFFFAF9F9),
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: ValueListenableBuilder<String>(
-                          valueListenable: _value,
-                          builder: (context, calendarValue, child) {
-                            return ValueListenableBuilder<DateTime>(
-                              valueListenable: _focusedDay,
-                              builder: (context, dateValue, child) {
-                                switch (calendarValue) {
-                                  case '2':
-                                    return ExerciceTimeSlots(
-                                      date: dateValue,
-                                    );
-                                  case '3':
-                                    return AbsenceTimeSlots(
-                                      date: _focusedDay,
-                                    );
-                                  default:
-                                    return ReunionTimeSlots(
-                                      date: _focusedDay,
-                                    );
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -23,11 +23,11 @@ class AuthOnlineDataSourceImpl implements AuthOnlineDataSource {
 
     if (res.statusCode == 200) {
       try {
-        if (res.data["role"] == 'Parents') {
-          return AuthResponseModel.fromJson(res.data);
-        } else {
-          throw NotAuthorizedFailure();
-        }
+        // if (res.data["role"] == 'Parents') {
+        return AuthResponseModel.fromJson(res.data);
+        // } else {
+        // throw NotAuthorizedFailure();
+        // }
       } catch (_) {
         rethrow;
       }

@@ -12,59 +12,55 @@ class MealsDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * .05),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Header(
-                title: title,
-              ),
-              Expanded(
-                  child: meals != null
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: meals!.meals.length,
-                          itemBuilder: (context, i) =>
-                              MealCard(meal: meals!.meals[i]),
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 280,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  opacity: .6,
-                                  image: AssetImage(
-                                    'assets/images/mealnotfound.png',
-                                    
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Text(
-                              "Aucun Repas",
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromARGB(255, 75, 75, 75),
-                              ),
-                            )
-                          ],
-                        )),
-            ],
+    return Container(
+      color: Color(0xFFF5FDFF),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * .05),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
+          Header(
+            title: title,
+          ),
+          Expanded(
+              child: meals != null
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: meals!.meals.length,
+                      itemBuilder: (context, i) =>
+                          MealCard(meal: meals!.meals[i]),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 280,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              opacity: .6,
+                              image: AssetImage(
+                                'assets/images/mealnotfound.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          "Aucun Repas",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromARGB(255, 75, 75, 75),
+                          ),
+                        )
+                      ],
+                    )),
+        ],
       ),
     );
   }

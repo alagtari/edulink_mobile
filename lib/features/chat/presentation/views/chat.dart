@@ -90,140 +90,135 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * .05,
-              vertical: 10),
-          child: Column(
+    return Container(
+      color: Color(0xFFF5FDFF),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * .05, vertical: 10),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => context.router.pop(),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      padding: const EdgeInsets.only(left: 7),
-                      decoration: const BoxDecoration(
-                          color: Color(0x43FF5652),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: const Center(
-                        child: Icon(Icons.arrow_back_ios,
-                            size: 23, color: Color(0xFFFF5652)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                    width: 70,
-                    child: Image.network(
-                      'https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${widget.room.nom.capitalize()} ${widget.room.prenom.capitalize()}",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        widget.room.role.capitalize(),
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Expanded(
-                child: BlocListener<ChatBloc, ChatState>(
-                  listener: (context, state) {
-                    if (state is GetMessagesSuccess) {
-                      _pusherService.setInitialValue(state.messages);
-                    }
-                  },
-                  child: StreamBuilder<List<MessageModel>>(
-                    stream: _pusherService.messagesStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const SizedBox();
-                      }
-                      final messages = snapshot.data ?? <MessageModel>[];
-                      if (messages.isEmpty) {
-                        return const SizedBox();
-                      }
-
-                      return Meesages(messages: messages);
-                    },
+              GestureDetector(
+                onTap: () => context.router.pop(),
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  padding: const EdgeInsets.only(left: 7),
+                  decoration: const BoxDecoration(
+                      color: Color(0x43FF5652),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: const Center(
+                    child: Icon(Icons.arrow_back_ios,
+                        size: 23, color: Color(0xFFFF5652)),
                   ),
                 ),
               ),
-              Row(
+              const SizedBox(
+                width: 20,
+              ),
+              SizedBox(
+                width: 70,
+                child: Image.network(
+                  'https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18.0),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                      ),
-                      child: TextField(
-                        onTap: () {},
-                        controller: messageController,
-                        decoration: const InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
-                          hintText: 'Type a message ...',
-                          border: InputBorder.none,
-                        ),
-                      ),
+                  Text(
+                    "${widget.room.nom.capitalize()} ${widget.room.prenom.capitalize()}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: _sendMessage,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Color(0x43FF5652),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
-                      child: const Center(
-                          child: Icon(
-                        Icons.send,
-                        color: Color(0xFFFF5652),
-                      )),
+                  Text(
+                    widget.room.role.capitalize(),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )
+                  ),
                 ],
               )
             ],
           ),
-        ),
+          const SizedBox(
+            height: 40,
+          ),
+          Expanded(
+            child: BlocListener<ChatBloc, ChatState>(
+              listener: (context, state) {
+                if (state is GetMessagesSuccess) {
+                  _pusherService.setInitialValue(state.messages);
+                }
+              },
+              child: StreamBuilder<List<MessageModel>>(
+                stream: _pusherService.messagesStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const SizedBox();
+                  }
+                  final messages = snapshot.data ?? <MessageModel>[];
+                  if (messages.isEmpty) {
+                    return const SizedBox();
+                  }
+
+                  return Meesages(messages: messages);
+                },
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.0),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                  child: TextField(
+                    onTap: () {},
+                    controller: messageController,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                      hintText: 'Type a message ...',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              GestureDetector(
+                onTap: _sendMessage,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Color(0x43FF5652),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
+                  child: const Center(
+                      child: Icon(
+                    Icons.send,
+                    color: Color(0xFFFF5652),
+                  )),
+                ),
+              )
+            ],
+          )
+        ],
       ),
     );
   }

@@ -16,39 +16,37 @@ class Events extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * .05),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              const Header(
-                title: "Events",
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Expanded(
-                child: BlocBuilder<EventsBloc, EventState>(builder: (context, state) {
-                  if (state is GetEventsSuccess) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.events.length,
-                      itemBuilder: (context, i) => EventCard(
-                        event: state.events[i],
-                      ),
-                    );
-                  }
-                  return const SizedBox();
-                }),
-              )
-            ],
+    return Container(
+      color: Color(0xFFF5FDFF),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * .05),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
+          const Header(
+            title: "Events",
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Expanded(
+            child:
+                BlocBuilder<EventsBloc, EventState>(builder: (context, state) {
+              if (state is GetEventsSuccess) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.events.length,
+                  itemBuilder: (context, i) => EventCard(
+                    event: state.events[i],
+                  ),
+                );
+              }
+              return const SizedBox();
+            }),
+          )
+        ],
       ),
     );
   }

@@ -16,7 +16,7 @@ class NotSelectedDay extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         margin: const EdgeInsets.only(right: 10),
         decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 230, 230, 230),
+          color: Color.fromARGB(255, 240, 240, 240),
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
