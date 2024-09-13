@@ -45,7 +45,7 @@ class _EmploiState extends State<Emploi> {
     super.initState();
   }
 
-  void changeDy(String day) {
+  void changeDay(String day) {
     setState(() {
       _selectedDay.value = day;
       _seanceDay.value =
@@ -94,7 +94,7 @@ class _EmploiState extends State<Emploi> {
                     ? SelectedDay(day: days[index])
                     : NotSelectedDay(
                         day: days[index],
-                        selectDay: changeDy,
+                        selectDay: changeDay,
                       );
               },
             ),
@@ -143,6 +143,10 @@ class _EmploiState extends State<Emploi> {
               if (state is GetEmploiSuccess) {
                 setState(() {
                   _seances.value = state.seances;
+                  // Set _seanceDay to the seances for the initial day
+                  _seanceDay.value = _seances.value
+                      .where((item) => item.jour == _selectedDay.value)
+                      .toList();
                 });
               }
             },

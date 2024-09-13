@@ -1,17 +1,23 @@
-import 'dart:math';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:edulink_mobile/common_widgets/header/header.dart';
+import 'package:edulink_mobile/features/exercice/presentation/bloc/exercice_bloc.dart';
 import 'package:edulink_mobile/features/exercice/presentation/widgets/exercice_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class ExercicesScreen extends StatefulWidget {
+class ExercicesScreen extends StatefulWidget implements AutoRouteWrapper {
   const ExercicesScreen({super.key});
 
   @override
   State<ExercicesScreen> createState() => _ExerciceScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+        create: (_) => ExerciceBloc()..add(GetExerciceEvent()),
+        child: this,
+      );
 }
 
 class _ExerciceScreenState extends State<ExercicesScreen> {
@@ -137,16 +143,24 @@ class _ExerciceScreenState extends State<ExercicesScreen> {
             height: 20,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * .825 - 190,
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ExerciceWidget(
-                  termine: index % 2 == 0 ? false : true,
-                );
-              },
-            ),
-          ),
+              height: MediaQuery.of(context).size.height * .825 - 190,
+              child: BlocBuilder<ExerciceBloc, ExerciceState>(
+                builder: (context, state) {
+                  if (state is GetExerciceSuccess) {
+                    return ListView.builder(
+                      itemCount: state.exercices.length,
+                      itemBuilder: (context, index) {
+                        return ExerciceWidget(
+                          termine: false,
+                          exercice: state.exercices[index],
+                        );
+                      },
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              )),
         ],
       ),
     );

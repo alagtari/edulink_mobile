@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:intl/intl.dart';
 
 String formatDate(DateTime dateTime) {
-  String formattedDate = DateFormat("d MMM y", "fr_FR").format(dateTime);
+  String formattedDate = DateFormat("d-MM-y", "fr_FR").format(dateTime);
   return formattedDate;
 }
 

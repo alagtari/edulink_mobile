@@ -20,77 +20,46 @@ class MealCard extends StatelessWidget {
           Radius.circular(20),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(200, 255, 85, 82),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50),
-                  ),
-                ),
-                child: Text(
-                  meal.titre,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              meal.titre,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey[800],
               ),
-              const Expanded(child: SizedBox()),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(200, 255, 85, 82),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      meal.heur,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.keyboard_arrow_right_sharp,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      meal.heurF,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Text(
-            meal.description,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              'Heure: ${meal.heur} - ${meal.heurF}',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[700],
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              meal.description,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Date: ${meal.date}',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[700],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

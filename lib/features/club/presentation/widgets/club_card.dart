@@ -42,7 +42,7 @@ class CubCard extends StatelessWidget {
                 ),
                 image: DecorationImage(
                   image: NetworkImage(
-                    "https://edulinkbackend.edulink.tn/uploads/club/${club.image}",
+                    "https://edulinkbackend.edulink.tn/uploads/${club.image}",
                   ),
                   fit: BoxFit.cover,
                 ),

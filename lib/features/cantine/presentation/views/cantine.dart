@@ -1,4 +1,5 @@
 import 'package:edulink_mobile/common_widgets/header/header.dart';
+import 'package:edulink_mobile/features/cantine/data/models/meal_model.dart';
 import 'package:edulink_mobile/features/cantine/presentation/bloc/meals_bloc.dart';
 import 'package:edulink_mobile/features/cantine/presentation/widgets/day.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _CantineState extends State<Cantine> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF5FDFF),
+      color: const Color(0xFFF5FDFF),
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * .05),
       child: Column(
@@ -33,70 +34,56 @@ class _CantineState extends State<Cantine> {
           const Header(
             title: "cantine",
           ),
-          BlocBuilder<MealsBloc, MealsState>(
-            builder: (context, state) {
-              if (state is GetMealsSuccess) {
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Day(
-                      day: 'lundi',
-                      image: 'cantine1.png',
-                      color: const Color.fromARGB(153, 70, 221, 185),
-                      meals: state.meals?.lundi,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Day(
-                      day: 'mardi',
-                      image: 'cantine2.png',
-                      color: const Color.fromARGB(153, 129, 131, 254),
-                      meals: state.meals?.mardi,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Day(
-                      day: 'mercredi',
-                      image: 'cantine3.png',
-                      color: const Color.fromARGB(153, 250, 113, 147),
-                      meals: state.meals?.mercredi,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Day(
-                      day: 'jeudi',
-                      image: 'cantine4.png',
-                      color: const Color.fromARGB(153, 70, 221, 185),
-                      meals: state.meals?.jeudi,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Day(
-                      day: 'vendredi',
-                      image: 'cantine5.png',
-                      color: const Color.fromARGB(153, 129, 131, 254),
-                      meals: state.meals?.vendredi,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Day(
-                      day: 'samedi',
-                      image: 'cantine6.png',
-                      color: const Color.fromARGB(153, 250, 113, 147),
-                      meals: state.meals?.samedi,
-                    ),
-                  ],
-                );
-              }
-              return const SizedBox();
-            },
+          const SizedBox(
+            height: 40,
+          ),
+          Expanded(
+            // Use Expanded to provide ListView with appropriate space
+            child: BlocBuilder<MealsBloc, MealsState>(
+              builder: (context, state) {
+                if (state is GetMealsSuccess) {
+                  final Map<String, List<MealModel>> groupedMeals = {};
+                  final List<String> days = [];
+
+                  for (var meal in state.meals) {
+                    String date = meal.date;
+
+                    if (groupedMeals.containsKey(date)) {
+                      groupedMeals[date]!.add(meal);
+                    } else {
+                      groupedMeals[date] = [meal];
+                      days.add(date);
+                    }
+                  }
+                  groupedMeals.forEach((date, mealsList) {
+                    mealsList.sort((a, b) => a.heur.compareTo(b.heur));
+                  });
+
+                  // Output the grouped map
+
+                  return ListView.builder(
+                    itemCount: days.length,
+                    itemBuilder: (context, index) {
+                      final day = days[index];
+                      final meals = groupedMeals[day];
+
+                      return Column(
+                        children: [
+                          Day(
+                            day: days[index],
+                            image: 'cantine2.png',
+                            color: Colors.red,
+                            meals: meals!,
+                          ),
+                          const SizedBox(height: 15),
+                        ],
+                      );
+                    },
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
           ),
         ],
       ),

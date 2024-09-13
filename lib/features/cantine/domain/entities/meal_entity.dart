@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class MealEntity extends Equatable  {
+class MealEntity extends Equatable {
   final String titre;
   final String heur;
   final String heurF;
   final String description;
-  final String jour;
+  final String date;
   final int id;
 
   const MealEntity({
@@ -13,10 +13,9 @@ class MealEntity extends Equatable  {
     required this.heur,
     required this.heurF,
     required this.description,
-    required this.jour,
+    required this.date,
     required this.id,
   });
-
 
   @override
   List<Object?> get props => [];

@@ -30,6 +30,7 @@ class ReunionOnlineDataSourceImpl implements ReunionOnlineDataSource {
               continue;
             }
           }
+          events.sort((a, b) => a.heurD.compareTo(b.heurD));
           return events;
         });
       } catch (_) {

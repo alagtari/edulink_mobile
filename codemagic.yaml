@@ -1,0 +1,99 @@
+workflows:
+  staging-android-workflow:
+    name: Android Staging Workflow
+    instance_type: mac_mini_m1
+    max_build_duration: 20
+    environment:
+      groups:
+        - google-credentials
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - pull_request
+      branch_patterns:
+        - pattern: 'staging'
+          include: true
+    scripts:
+      - name: Setup the keystore
+        script: |
+          echo $KEYSTORE_FILE | base64 --decode > /tmp/keystore.jks
+          cat >> "$CM_BUILD_DIR/android/key.properties << EOF
+          storePassword=$KEYSTORE_PASSWORD
+          keyPassword=$KEYSTORE_KEY_PASSWORD
+          keyAlias=deployment
+          storeFile=/tmp/keystore.jks
+          EOF     
+      - name: Build AAB
+        script: |
+          cd $CM_BUILD_DIR
+          flutter packages pub get
+          flutter build appbundle
+    artifacts:
+      - build/**/outputs/**/*.aab
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT
+        track: alpha
+  
+  staging-ios-workflow:
+    name: Ios Staging Workflow
+    max_build_duration: 20
+    instance_type: mac_mini_m1
+    environment:
+      ios_signing:
+       distribution_type: app_store
+       bundle_identifier: com.hakim.edulink
+      flutter: stable
+      xcode: latest 
+      vars:
+        APP_ID: 6480532854
+    triggering:
+      events:
+        - pull_request
+      branch_patterns:
+        - pattern: 'staging'
+          include: true
+    scripts:
+      - name: Clean cache
+        script: |
+          rm pubspec.lock
+          flutter packages pub get
+      - name: Use the profile in xcode
+        script: |
+          xcode-project use-profiles
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Update Firebase/CoreOnly dependency
+        script: |
+          find . -name "Podfile" -execdir pod update Firebase/CoreOnly \;
+      - name: Pod install
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Build IPA with Flutter
+        script: | 
+          BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1))
+          flutter build ipa --release \
+            --build-name=0.0.$BUILD_NUMBER \
+            --build-number=$BUILD_NUMBER
+      - name: Sign IPA with xcode
+        script: |
+          xcode-project build-ipa --workspace "ios/Runner.xcworkspace" --scheme "Runner"
+
+    artifacts:
+      - ./build/ios/ipa/*.ipa
+
+    integrations:
+      app_store_connect: Codemagic api key
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+#        beta_groups: 
+#          - Internal STB Testers
+
+      
+      

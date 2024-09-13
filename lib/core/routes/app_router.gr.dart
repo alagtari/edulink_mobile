@@ -12,21 +12,21 @@ import 'package:auto_route/auto_route.dart' as _i23;
 import 'package:edulink_mobile/features/auth/login/presentation/views/choose_children_screen.dart'
     as _i6;
 import 'package:edulink_mobile/features/auth/login/presentation/views/login.dart'
-    as _i17;
+    as _i16;
 import 'package:edulink_mobile/features/bulletin/presentation/views/bulletin.dart'
     as _i2;
-import 'package:edulink_mobile/features/calendar/data/models/exercice_model.dart'
-    as _i28;
 import 'package:edulink_mobile/features/calendar/presentation/views/calendar.dart'
     as _i3;
-import 'package:edulink_mobile/features/calendar/presentation/views/exercice.dart'
-    as _i12;
 import 'package:edulink_mobile/features/cantine/data/models/day_meals_Model.dart'
+    as _i30;
+import 'package:edulink_mobile/features/cantine/data/models/meal_model.dart'
     as _i29;
 import 'package:edulink_mobile/features/cantine/presentation/views/cantine.dart'
     as _i4;
-import 'package:edulink_mobile/features/cantine/presentation/views/meals_day.dart'
+import 'package:edulink_mobile/features/cantine/presentation/views/meals.dart'
     as _i18;
+import 'package:edulink_mobile/features/cantine/presentation/views/meals_day.dart'
+    as _i17;
 import 'package:edulink_mobile/features/chat/data/models/room_model.dart'
     as _i25;
 import 'package:edulink_mobile/features/chat/presentation/views/chat.dart'
@@ -47,21 +47,23 @@ import 'package:edulink_mobile/features/events/presentation/views/event.dart'
     as _i10;
 import 'package:edulink_mobile/features/events/presentation/views/events.dart'
     as _i11;
+import 'package:edulink_mobile/features/exercice/data/models/exercice_model.dart'
+    as _i28;
 import 'package:edulink_mobile/features/exercice/presentation/views/exercice_screen.dart'
-    as _i13;
+    as _i12;
 import 'package:edulink_mobile/features/exercice/presentation/views/exercices_screen.dart'
-    as _i14;
+    as _i13;
 import 'package:edulink_mobile/features/home/presentation/views/app_frame.dart'
     as _i1;
 import 'package:edulink_mobile/features/home/presentation/views/home.dart'
-    as _i16;
+    as _i15;
 import 'package:edulink_mobile/features/home/presentation/views/notifications_screen.dart'
     as _i19;
 import 'package:edulink_mobile/features/payment/presentation/views/payment.dart'
     as _i20;
 import 'package:edulink_mobile/features/profile/presentation/views/profile_screen.dart'
     as _i21;
-import 'package:edulink_mobile/forget_password.dart' as _i15;
+import 'package:edulink_mobile/forget_password.dart' as _i14;
 import 'package:flutter/material.dart' as _i24;
 
 abstract class $AppRouter extends _i23.RootStackRouter {
@@ -148,51 +150,56 @@ abstract class $AppRouter extends _i23.RootStackRouter {
         child: _i23.WrappedRoute(child: const _i11.Events()),
       );
     },
-    Exercice.name: (routeData) {
-      final args = routeData.argsAs<ExerciceArgs>();
+    ExerciceRoute.name: (routeData) {
+      final args = routeData.argsAs<ExerciceRouteArgs>();
       return _i23.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.Exercice(
+        child: _i12.ExerciceScreen(
           key: args.key,
           exercice: args.exercice,
         ),
       );
     },
-    ExerciceRoute.name: (routeData) {
-      return _i23.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i13.ExerciceScreen(),
-      );
-    },
     ExercicesRoute.name: (routeData) {
       return _i23.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.ExercicesScreen(),
+        child: _i23.WrappedRoute(child: const _i13.ExercicesScreen()),
       );
     },
     ForgetPassword.name: (routeData) {
       return _i23.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i15.ForgetPassword(),
+        child: const _i14.ForgetPassword(),
       );
     },
     Home.name: (routeData) {
       return _i23.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i16.Home(),
+        child: const _i15.Home(),
       );
     },
     Login.name: (routeData) {
       return _i23.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i23.WrappedRoute(child: const _i17.Login()),
+        child: _i23.WrappedRoute(child: const _i16.Login()),
       );
     },
     MealsDay.name: (routeData) {
       final args = routeData.argsAs<MealsDayArgs>();
       return _i23.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i18.MealsDay(
+        child: _i17.MealsDay(
+          key: args.key,
+          title: args.title,
+          meals: args.meals,
+        ),
+      );
+    },
+    MealsRoute.name: (routeData) {
+      final args = routeData.argsAs<MealsRouteArgs>();
+      return _i23.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i18.MealsPage(
           key: args.key,
           title: args.title,
           meals: args.meals,
@@ -450,29 +457,29 @@ class Events extends _i23.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.Exercice]
-class Exercice extends _i23.PageRouteInfo<ExerciceArgs> {
-  Exercice({
+/// [_i12.ExerciceScreen]
+class ExerciceRoute extends _i23.PageRouteInfo<ExerciceRouteArgs> {
+  ExerciceRoute({
     _i24.Key? key,
     required _i28.ExerciceModel exercice,
     List<_i23.PageRouteInfo>? children,
   }) : super(
-          Exercice.name,
-          args: ExerciceArgs(
+          ExerciceRoute.name,
+          args: ExerciceRouteArgs(
             key: key,
             exercice: exercice,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'Exercice';
+  static const String name = 'ExerciceRoute';
 
-  static const _i23.PageInfo<ExerciceArgs> page =
-      _i23.PageInfo<ExerciceArgs>(name);
+  static const _i23.PageInfo<ExerciceRouteArgs> page =
+      _i23.PageInfo<ExerciceRouteArgs>(name);
 }
 
-class ExerciceArgs {
-  const ExerciceArgs({
+class ExerciceRouteArgs {
+  const ExerciceRouteArgs({
     this.key,
     required this.exercice,
   });
@@ -483,26 +490,12 @@ class ExerciceArgs {
 
   @override
   String toString() {
-    return 'ExerciceArgs{key: $key, exercice: $exercice}';
+    return 'ExerciceRouteArgs{key: $key, exercice: $exercice}';
   }
 }
 
 /// generated route for
-/// [_i13.ExerciceScreen]
-class ExerciceRoute extends _i23.PageRouteInfo<void> {
-  const ExerciceRoute({List<_i23.PageRouteInfo>? children})
-      : super(
-          ExerciceRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ExerciceRoute';
-
-  static const _i23.PageInfo<void> page = _i23.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i14.ExercicesScreen]
+/// [_i13.ExercicesScreen]
 class ExercicesRoute extends _i23.PageRouteInfo<void> {
   const ExercicesRoute({List<_i23.PageRouteInfo>? children})
       : super(
@@ -516,7 +509,7 @@ class ExercicesRoute extends _i23.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.ForgetPassword]
+/// [_i14.ForgetPassword]
 class ForgetPassword extends _i23.PageRouteInfo<void> {
   const ForgetPassword({List<_i23.PageRouteInfo>? children})
       : super(
@@ -530,7 +523,7 @@ class ForgetPassword extends _i23.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i16.Home]
+/// [_i15.Home]
 class Home extends _i23.PageRouteInfo<void> {
   const Home({List<_i23.PageRouteInfo>? children})
       : super(
@@ -544,7 +537,7 @@ class Home extends _i23.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.Login]
+/// [_i16.Login]
 class Login extends _i23.PageRouteInfo<void> {
   const Login({List<_i23.PageRouteInfo>? children})
       : super(
@@ -558,12 +551,12 @@ class Login extends _i23.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i18.MealsDay]
+/// [_i17.MealsDay]
 class MealsDay extends _i23.PageRouteInfo<MealsDayArgs> {
   MealsDay({
     _i24.Key? key,
     required String title,
-    _i29.DayMealsModel? meals,
+    required List<_i29.MealModel> meals,
     List<_i23.PageRouteInfo>? children,
   }) : super(
           MealsDay.name,
@@ -585,6 +578,49 @@ class MealsDayArgs {
   const MealsDayArgs({
     this.key,
     required this.title,
+    required this.meals,
+  });
+
+  final _i24.Key? key;
+
+  final String title;
+
+  final List<_i29.MealModel> meals;
+
+  @override
+  String toString() {
+    return 'MealsDayArgs{key: $key, title: $title, meals: $meals}';
+  }
+}
+
+/// generated route for
+/// [_i18.MealsPage]
+class MealsRoute extends _i23.PageRouteInfo<MealsRouteArgs> {
+  MealsRoute({
+    _i24.Key? key,
+    required String title,
+    _i30.DayMealsModel? meals,
+    List<_i23.PageRouteInfo>? children,
+  }) : super(
+          MealsRoute.name,
+          args: MealsRouteArgs(
+            key: key,
+            title: title,
+            meals: meals,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'MealsRoute';
+
+  static const _i23.PageInfo<MealsRouteArgs> page =
+      _i23.PageInfo<MealsRouteArgs>(name);
+}
+
+class MealsRouteArgs {
+  const MealsRouteArgs({
+    this.key,
+    required this.title,
     this.meals,
   });
 
@@ -592,11 +628,11 @@ class MealsDayArgs {
 
   final String title;
 
-  final _i29.DayMealsModel? meals;
+  final _i30.DayMealsModel? meals;
 
   @override
   String toString() {
-    return 'MealsDayArgs{key: $key, title: $title, meals: $meals}';
+    return 'MealsRouteArgs{key: $key, title: $title, meals: $meals}';
   }
 }
 

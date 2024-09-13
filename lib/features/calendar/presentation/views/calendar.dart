@@ -1,9 +1,9 @@
 import 'package:edulink_mobile/common_widgets/header/header.dart';
+import 'package:edulink_mobile/features/calendar/data/models/absence_model.dart';
+import 'package:edulink_mobile/features/calendar/data/models/reunion_model.dart';
 import 'package:edulink_mobile/features/calendar/presentation/bloc/absence/absences_bloc.dart';
-import 'package:edulink_mobile/features/calendar/presentation/bloc/exercice/exercices_bloc.dart';
 import 'package:edulink_mobile/features/calendar/presentation/bloc/reunion/reunions_bloc.dart';
 import 'package:edulink_mobile/features/calendar/presentation/views/absence_time_slots.dart';
-import 'package:edulink_mobile/features/calendar/presentation/views/exercice_time_slots.dart';
 import 'package:edulink_mobile/features/calendar/presentation/views/reunion_time_slots.dart';
 import 'package:edulink_mobile/features/calendar/presentation/widgets/normal_day.dart';
 import 'package:edulink_mobile/features/calendar/presentation/widgets/selected_day.dart';
@@ -20,17 +20,22 @@ class Calendar extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider<ExercicesBloc>(
-            create: (BuildContext context) => ExercicesBloc(),
-          ),
           BlocProvider<ReunionsBloc>(
-            create: (BuildContext context) => ReunionsBloc(),
+            create: (BuildContext context) => ReunionsBloc()
+              ..add(
+                GetReunionsEvent(
+                  date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                ),
+              ),
           ),
           BlocProvider<AbsencesBloc>(
             create: (BuildContext context) => AbsencesBloc(),
           ),
         ],
-        child: this,
+        child: Builder(
+          builder: (context) =>
+              this, // Using Builder here to safely return 'this'
+        ),
       );
 
   @override
@@ -41,32 +46,46 @@ class _CalendarState extends State<Calendar> {
   late ValueNotifier<DateTime> _focusedDay;
   late DateTime? _selectedDay;
   late ValueNotifier<String> _value;
+  late ValueNotifier<List<ReunionModel>?> _reunionsNotifier;
+  late ValueNotifier<List<AbsenceModel>?> _absencesNotifier;
 
   @override
   void initState() {
     _focusedDay = ValueNotifier(DateTime.now());
     _selectedDay = DateTime.now();
     _value = ValueNotifier<String>('1');
+    _reunionsNotifier = ValueNotifier<List<ReunionModel>?>(null);
+    _absencesNotifier = ValueNotifier<List<AbsenceModel>?>(null);
+
     _focusedDay.addListener(() {
       switch (_value.value) {
-        case "1":
+        case '1':
           context.read<ReunionsBloc>().add(GetReunionsEvent(
                 date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
               ));
           break;
-        case "2":
-          context.read<ExercicesBloc>().add(GetExercicesEvent(
-                date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
-              ));
-          break;
-        case "3":
+        case '2':
           context.read<AbsencesBloc>().add(GetAbsencesEvent(
                 date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
               ));
           break;
-
         default:
-          // Handle other cases if needed
+          break;
+      }
+    });
+    _value.addListener(() {
+      switch (_value.value) {
+        case '1':
+          context.read<ReunionsBloc>().add(GetReunionsEvent(
+                date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
+              ));
+          break;
+        case '2':
+          context.read<AbsencesBloc>().add(GetAbsencesEvent(
+                date: DateFormat('yyyy-MM-dd').format(_focusedDay.value),
+              ));
+          break;
+        default:
           break;
       }
     });
@@ -85,18 +104,12 @@ class _CalendarState extends State<Calendar> {
     const DropdownMenuItem(
       value: '2',
       child: Text(
-        'Exercices',
-        style: TextStyle(color: Color(0xFF4DC591)),
-      ),
-    ),
-    const DropdownMenuItem(
-      value: '3',
-      child: Text(
         'Absences',
         style: TextStyle(color: Color(0xFF4DC591)),
       ),
     )
   ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -240,7 +253,6 @@ class _CalendarState extends State<Calendar> {
                           _selectedDay = selectedDay;
                           _focusedDay.value = focusedDay;
                         });
-                        // widget.onDateSelected.call(_selectedDay!);
                       }
                     },
                     locale: 'fr_FR',
@@ -289,30 +301,43 @@ class _CalendarState extends State<Calendar> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: ValueListenableBuilder<String>(
-                      valueListenable: _value,
-                      builder: (context, calendarValue, child) {
-                        return ValueListenableBuilder<DateTime>(
-                          valueListenable: _focusedDay,
-                          builder: (context, dateValue, child) {
-                            switch (calendarValue) {
-                              case '2':
-                                return ExerciceTimeSlots(
-                                  date: dateValue,
-                                );
-                              case '3':
-                                return AbsenceTimeSlots(
-                                  date: _focusedDay,
-                                );
-                              default:
-                                return ReunionTimeSlots(
-                                  date: _focusedDay,
-                                );
-                            }
-                          },
-                        );
-                      },
+                  MultiBlocListener(
+                    listeners: [
+                      BlocListener<AbsencesBloc, AbsencesState>(
+                        listener: (context, state) {
+                          if (state is GetAbsencesSuccess) {
+                            _absencesNotifier.value = state.absences;
+                            _reunionsNotifier.value = null;
+                          }
+                        },
+                      ),
+                      BlocListener<ReunionsBloc, ReunionsState>(
+                        listener: (context, state) {
+                          if (state is GetReunionsSuccess) {
+                            _reunionsNotifier.value = state.reunions;
+                            _absencesNotifier.value = null;
+                          }
+                        },
+                      ),
+                    ],
+                    child: Expanded(
+                      child: ValueListenableBuilder<List<ReunionModel>?>(
+                        valueListenable: _reunionsNotifier,
+                        builder: (context, reunions, child) {
+                          if (reunions != null) {
+                            return ReunionTimeSlots(reunions: reunions);
+                          }
+                          return ValueListenableBuilder<List<AbsenceModel>?>(
+                            valueListenable: _absencesNotifier,
+                            builder: (context, absences, child) {
+                              if (absences != null) {
+                                return AbsenceTimeSlots(absences: absences);
+                              }
+                              return const SizedBox();
+                            },
+                          );
+                        },
+                      ),
                     ),
                   )
                 ],

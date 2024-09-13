@@ -17,7 +17,7 @@ class PusherService {
 
     try {
       await pusher.init(
-        apiKey: '2b6959525e8fede60bc9',
+        apiKey: 'd59f86f290b84764a7e9',
         cluster: 'mt1',
       );
       await pusher.connect();

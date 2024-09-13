@@ -10,13 +10,10 @@ import 'package:edulink_mobile/features/bulletin/data/data_sources/remote_data_s
 import 'package:edulink_mobile/features/bulletin/data/repositories/notes_repository_impl.dart';
 import 'package:edulink_mobile/features/bulletin/domain/repositories/notes_repository.dart';
 import 'package:edulink_mobile/features/calendar/data/data_sources/absence_remote_data_source.dart';
-import 'package:edulink_mobile/features/calendar/data/data_sources/exercice_remote_data_source.dart';
 import 'package:edulink_mobile/features/calendar/data/data_sources/reunion_remote_data_source.dart';
 import 'package:edulink_mobile/features/calendar/data/repositories/absences_repository_impl.dart';
-import 'package:edulink_mobile/features/calendar/data/repositories/exercices_repository_impl.dart';
 import 'package:edulink_mobile/features/calendar/data/repositories/reunions_repository_impl.dart';
 import 'package:edulink_mobile/features/calendar/domain/repositories/absences_repository.dart';
-import 'package:edulink_mobile/features/calendar/domain/repositories/exercices_repository.dart';
 import 'package:edulink_mobile/features/calendar/domain/repositories/reunions_repository.dart';
 import 'package:edulink_mobile/features/cantine/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/cantine/data/repositories/meals_repository_impl.dart';
@@ -33,6 +30,9 @@ import 'package:edulink_mobile/features/emploi/domain/repositories/emploi_reposi
 import 'package:edulink_mobile/features/events/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/events/data/repositories/events_repository_impl.dart';
 import 'package:edulink_mobile/features/events/domain/repositories/events_repository.dart';
+import 'package:edulink_mobile/features/exercice/data/data_sources/exercice_remote_data_source.dart';
+import 'package:edulink_mobile/features/exercice/data/repositories/exercices_repository_impl.dart';
+import 'package:edulink_mobile/features/exercice/domain/repositories/exercices_repository.dart';
 import 'package:edulink_mobile/features/payment/data/data_sources/remote_data_source.dart';
 import 'package:edulink_mobile/features/payment/data/repositories/tranches_repository_impl.dart';
 import 'package:edulink_mobile/features/payment/domain/repositories/tranches_repository.dart';

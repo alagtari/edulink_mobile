@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:edulink_mobile/core/common_used/response_wrapper.dart';
 import 'package:edulink_mobile/core/errors/failures.dart';
@@ -14,7 +16,6 @@ class EmploiOnlineDataSourceImpl implements EmploiOnlineDataSource {
     final res = await sl<Dio>().get(
       "/emplois/index",
     );
-
     if (res.statusCode == 200) {
       try {
         return ResponseWrapper<List<SeanceModel>>.fromJson(
@@ -29,6 +30,7 @@ class EmploiOnlineDataSourceImpl implements EmploiOnlineDataSource {
                 continue;
               }
             }
+            seances.sort((a, b) => a.heurDebut.compareTo(b.heurDebut));
             return seances;
           },
         );

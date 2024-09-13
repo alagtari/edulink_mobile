@@ -32,7 +32,7 @@ class Event extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
                     image: NetworkImage(
-                      "https://edulinkbackend.edulink.tn/uploads/evenement/${event.image}",
+                      "https://edulinkbackend.edulink.tn/uploads/${event.image}",
                     ),
                     fit: BoxFit.cover),
               ),

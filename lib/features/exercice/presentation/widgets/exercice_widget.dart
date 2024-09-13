@@ -1,19 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:edulink_mobile/core/routes/app_router.gr.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:edulink_mobile/features/exercice/data/models/exercice_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ExerciceWidget extends StatelessWidget {
   const ExerciceWidget({
     super.key,
     this.termine = false,
+    required this.exercice,
   });
   final bool termine;
+  final ExerciceModel exercice;
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         width: double.infinity,
         height: 120,
         padding: const EdgeInsets.all(15),
@@ -59,20 +60,20 @@ class ExerciceWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nom de l'exercice",
-                    style: TextStyle(
+                    exercice.matiere,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text("20/03/2024"),
+                  Text(exercice.dateL),
                 ],
               ),
               const Expanded(
@@ -80,7 +81,7 @@ class ExerciceWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () => context.router.push(
-                  const ExerciceRoute(),
+                  ExerciceRoute(exercice: exercice),
                 ),
                 child: Container(
                   height: 35,

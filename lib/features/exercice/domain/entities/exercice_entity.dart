@@ -9,6 +9,7 @@ class ExerciceEntity extends Equatable {
   final String image;
   final String description;
   final String matiere;
+  final String? pdf;
 
   const ExerciceEntity({
     required this.id,
@@ -19,10 +20,9 @@ class ExerciceEntity extends Equatable {
     required this.image,
     required this.description,
     required this.matiere,
+    required this.pdf,
   });
-  
+
   @override
   List<Object?> get props => [];
-
- 
 }

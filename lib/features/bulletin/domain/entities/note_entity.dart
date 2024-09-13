@@ -5,7 +5,7 @@ class NoteEntity extends Equatable {
   final int controle;
   final int examen;
   final String commentaires;
-  final double note;
+  final double moyenne;
   final String matiere;
 
   const NoteEntity({
@@ -13,7 +13,7 @@ class NoteEntity extends Equatable {
     required this.controle,
     required this.examen,
     required this.commentaires,
-    required this.note,
+    required this.moyenne,
     required this.matiere,
   });
 

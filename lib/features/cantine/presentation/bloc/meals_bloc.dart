@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:edulink_mobile/core/injection/injection_container.dart';
+import 'package:edulink_mobile/features/cantine/data/models/meal_model.dart';
 import 'package:edulink_mobile/features/cantine/data/models/week_meals_model.dart';
 import 'package:edulink_mobile/features/cantine/domain/repositories/meals_repository.dart';
 import 'package:flutter/foundation.dart';

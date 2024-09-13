@@ -27,7 +27,7 @@ class _BulletinState extends State<Bulletin> {
     }
     double sum = 0.0;
     for (var note in notes) {
-      sum += note.note;
+      sum += note.moyenne;
     }
     return sum / notes.length;
   }
@@ -35,7 +35,7 @@ class _BulletinState extends State<Bulletin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF5FDFF),
+      color: const Color(0xFFF5FDFF),
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * .05),
       child: Column(
@@ -65,28 +65,21 @@ class _BulletinState extends State<Bulletin> {
                 flex: 4,
                 child: Text(
                   'Matière',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
-                  'control',
-                  style: TextStyle(fontWeight: FontWeight.w700),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  'examen',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                  'Commentaire',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                 ),
               ),
               Expanded(
                 flex: 2,
                 child: Text(
                   'moyenne',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                 ),
               ),
             ]),
@@ -147,7 +140,7 @@ class _BulletinState extends State<Bulletin> {
                         if (state is GetNotesSuccess) {
                           double moyenne = calculeMoyenne(state.notes);
                           return Text(
-                            "$moyenne",
+                            moyenne.toStringAsFixed(2),
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 15,

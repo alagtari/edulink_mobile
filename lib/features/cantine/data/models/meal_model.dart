@@ -6,7 +6,7 @@ class MealModel extends MealEntity {
     required super.heur,
     required super.heurF,
     required super.description,
-    required super.jour,
+    required super.date,
     required super.id,
   });
 
@@ -16,7 +16,7 @@ class MealModel extends MealEntity {
       heur: json['heur'],
       heurF: json['heurF'],
       description: json['description'],
-      jour: json['jour'],
+      date: json['date'],
       id: json['id'],
     );
   }
@@ -27,7 +27,7 @@ class MealModel extends MealEntity {
       'heur': heur,
       'heurF': heurF,
       'description': description,
-      'jour': jour,
+      'date': date,
       'id': id,
     };
   }

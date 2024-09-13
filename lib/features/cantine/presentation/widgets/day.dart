@@ -1,21 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:edulink_mobile/core/routes/app_router.gr.dart';
 import 'package:edulink_mobile/core/util/utils.dart';
-import 'package:edulink_mobile/features/cantine/data/models/day_meals_Model.dart';
+import 'package:edulink_mobile/features/cantine/data/models/meal_model.dart';
 import 'package:flutter/material.dart';
 
 class Day extends StatelessWidget {
   final String day;
   final String image;
   final Color color;
-  final DayMealsModel? meals;
+  final List<MealModel> meals;
 
   const Day({
     super.key,
     required this.day,
     required this.image,
     required this.color,
-    this.meals,
+    required this.meals,
   });
 
   @override
@@ -46,7 +46,7 @@ class Day extends StatelessWidget {
                 day.capitalize(),
                 style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600),
               ),
             ),

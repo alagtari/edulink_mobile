@@ -10,10 +10,10 @@ class MealsInitial extends MealsState {}
 class GetMealsLoading extends MealsState {}
 
 class GetMealsSuccess extends MealsState {
-  final WeekMealsModel? meals;
+  final List<MealModel> meals;
 
   const GetMealsSuccess({
-    this.meals,
+   required this.meals,
   });
 }
 

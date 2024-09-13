@@ -65,10 +65,10 @@ class ReunionTimeSlot extends StatelessWidget {
                     return Container(
                       height: 500,
                       padding: const EdgeInsets.all(20),
-                      decoration:const BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
-                           topRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
                         ),
                         color: Colors.white,
                       ),
@@ -81,7 +81,6 @@ class ReunionTimeSlot extends StatelessWidget {
                             alignment: Alignment.bottomLeft,
                             child: Row(
                               children: [
-                               
                                 const SizedBox(
                                   width: 5,
                                 ),
@@ -160,21 +159,13 @@ class ReunionTimeSlot extends StatelessWidget {
                       Text(
                         reunion.titre,
                         textAlign: TextAlign.left,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Poppins',
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        '${reunion.description.length > 50 ? reunion.description.substring(0, 50) : reunion.description} ...',
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ]),

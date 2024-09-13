@@ -44,6 +44,7 @@ class _AppFrameState extends State<AppFrame> {
       // key: MyApp.scaffoldKey,
       body: const SafeArea(child: AutoRouter()),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

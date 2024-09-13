@@ -5,8 +5,8 @@ class NoteModel extends NoteEntity {
     required super.oral,
     required super.controle,
     required super.examen,
+    required super.moyenne,
     required super.commentaires,
-    required super.note,
     required super.matiere,
   });
 
@@ -15,8 +15,10 @@ class NoteModel extends NoteEntity {
       oral: int.parse(json['oral']),
       controle: int.parse(json['controle']),
       examen: int.parse(json['examen']),
+      moyenne: json['moyenne'] is double
+          ? json['moyenne']
+          : double.parse(json['moyenne'].toString()),
       commentaires: json['commentaires'],
-      note: (int.parse(json['oral']) + int.parse(json['oral'])) / 2,
       matiere: json['matiere'],
     );
   }

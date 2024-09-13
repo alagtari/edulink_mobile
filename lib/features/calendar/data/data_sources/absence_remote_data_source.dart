@@ -31,6 +31,7 @@ class AbsenceOnlineDataSourceImpl implements AbsenceOnlineDataSource {
               continue;
             }
           }
+          absences.sort((a, b) => a.heurD.compareTo(b.heurD));
           return absences;
         });
       } catch (_) {

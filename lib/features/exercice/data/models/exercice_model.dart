@@ -1,4 +1,4 @@
-import 'package:edulink_mobile/features/calendar/domain/entities/exercice_entity.dart';
+import 'package:edulink_mobile/features/exercice/domain/entities/exercice_entity.dart';
 
 class ExerciceModel extends ExerciceEntity {
   const ExerciceModel({
@@ -10,6 +10,7 @@ class ExerciceModel extends ExerciceEntity {
     required super.image,
     required super.description,
     required super.matiere,
+    required super.pdf,
   });
 
   factory ExerciceModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +23,7 @@ class ExerciceModel extends ExerciceEntity {
       image: json['image'],
       description: json['description'],
       matiere: json['matiere'],
+      pdf: json['pdf'],
     );
   }
 
