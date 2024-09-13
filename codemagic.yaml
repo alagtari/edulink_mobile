@@ -6,7 +6,7 @@ workflows:
     environment:
       groups:
         - google_credentials
-      flutter: stable
+      flutter: "3.22.2"
       xcode: latest
       cocoapods: default
     triggering:
@@ -45,7 +45,7 @@ workflows:
       ios_signing:
        distribution_type: app_store
        bundle_identifier: com.hakim.edulink
-      flutter: stable
+      flutter: "3.22.2"
       xcode: latest 
       vars:
         APP_ID: 6480532854
