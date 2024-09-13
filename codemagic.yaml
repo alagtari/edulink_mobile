@@ -44,6 +44,7 @@ workflows:
     environment:
       ios_signing:
        distribution_type: app_store
+       bundle_identifier: com.hakim.edulink
       flutter: "3.22.2"
       xcode: latest 
       vars:
