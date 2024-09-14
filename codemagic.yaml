@@ -64,7 +64,7 @@ workflows:
         script: |
           # Extract version and build number from pubspec.yaml
           APP_VERSION=$(grep 'version:' pubspec.yaml | cut -d '+' -f 1 | awk '{print $2}')
-          BUILD_NUMBER=$(grep 'version:' pubspec.yaml | cut -d '+' -f 2)
+          BUILD_NUMBER=$(grep 'build_number' pubspec.yaml | awk '{print $NF}')
           echo "App version: $APP_VERSION"
           echo "Build number: $BUILD_NUMBER"
       - name: Use the profile in xcode
