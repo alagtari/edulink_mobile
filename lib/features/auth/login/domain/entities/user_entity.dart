@@ -5,21 +5,21 @@ class UserEntity extends Equatable {
   final String nom;
   final String prenom;
   final String code;
-  final String email;
-  final String nomP;
-  final String nomM;
-  final String prenomP;
-  final String prenomM;
+  final String? email;
+  final String? nomP;
+  final String? nomM;
+  final String? prenomP;
+  final String? prenomM;
   final String image;
-  final String numP;
-  final String numM;
+  final String? numP;
+  final String? numM;
   final String sexe;
   final String dateNaiss;
   final int status;
   final int classeId;
   final int organisationId;
 
-  UserEntity({
+  const UserEntity({
     required this.id,
     required this.nom,
     required this.prenom,
