@@ -69,9 +69,6 @@ workflows:
       - name: Get Flutter packages
         script: |
           flutter pub get
-      - name: Update Firebase/CoreOnly dependency
-        script: |
-          find . -name "Podfile" -execdir pod update Firebase/CoreOnly \;
       - name: Pod install
         script: |
           find . -name "Podfile" -execdir pod install \;
