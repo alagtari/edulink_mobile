@@ -1,8 +1,7 @@
 name: edulink_mobile
 description: "A new Flutter project."
 
-version: 1.0.4
-build_number : 4
+version: 1.0.0+5
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
