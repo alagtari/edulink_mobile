@@ -26,11 +26,16 @@ workflows:
           keyAlias=deployment
           storeFile=/tmp/keystore.jks
           EOF     
-      - name: Build AAB
+      - name: Get Flutter packages
         script: |
-          cd $CM_BUILD_DIR 
-          flutter packages pub get
-          flutter build appbundle
+          flutter pub get
+      - name: Increment version and build AAB
+        script: |
+          LATEST_BUILD_NUMBER=$(google-play get-latest-build-number --package-name 'com.edulink.mobile' --tracks="alpha")
+          NEW_BUILD_NUMBER=$((LATEST_BUILD_NUMBER + 1))
+          # Update pubspec.yaml with new build number
+          sed -i '' "s/^version: .*/version: $(grep 'version:' pubspec.yaml | cut -d '+' -f 1 | awk '{print $2}')+$NEW_BUILD_NUMBER/" pubspec.yaml
+          flutter build appbundle --release
     artifacts:
       - build/**/outputs/**/*.aab
     publishing:
@@ -39,13 +44,13 @@ workflows:
         track: alpha
   
   staging-ios-workflow:
-    name: Ios Staging Workflow
+    name: iOS Staging Workflow
     max_build_duration: 20
     instance_type: mac_mini_m1
     environment:
       ios_signing:
-       distribution_type: app_store
-       bundle_identifier: com.hakim.edulink
+        distribution_type: app_store
+        bundle_identifier: com.hakim.edulink
       flutter: "3.22.2"
       xcode: latest 
       vars:
@@ -69,25 +74,23 @@ workflows:
       - name: Pod install
         script: |
           find . -name "Podfile" -execdir pod install \;
-      - name: Build IPA with Flutter
+      - name: Increment version and build IPA
         script: | 
-          # Build IPA with specific version and build number
+          # Get current version and build number
           APP_VERSION=$(grep 'version:' pubspec.yaml | cut -d '+' -f 1 | awk '{print $2}')
-          BUILD_NUMBER=$(grep 'build_number' pubspec.yaml | awk '{print $NF}')
-          echo "App version: $APP_VERSION"
-          echo "Build number: $BUILD_NUMBER"
-          flutter build ipa --release \
-            --build-name=$APP_VERSION \
-            --build-number=$BUILD_NUMBER
+          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_ID")
+          NEW_BUILD_NUMBER=$((LATEST_BUILD_NUMBER + 1))
+          # Update pubspec.yaml with new build number
+          sed -i '' "s/^version: .*/version: $APP_VERSION+$NEW_BUILD_NUMBER/" pubspec.yaml
+          # Build IPA
+          flutter build ipa --release
       - name: Sign IPA with xcode
         script: |
           xcode-project build-ipa --workspace "ios/Runner.xcworkspace" --scheme "Runner"
     artifacts:
-      - ./build/ios/ipa/*.ipa
-
+      - build/ios/ipa/*.ipa
     integrations:
       app_store_connect: Codemagic api key
-
     publishing:
       app_store_connect:
         auth: integration
