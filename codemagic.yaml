@@ -60,6 +60,9 @@ workflows:
         script: |
           rm pubspec.lock
           flutter packages pub get
+      - name: Run build_runner
+        script: |
+          flutter pub run build_runner build --delete-conflicting-outputs
       - name: Use the profile in xcode
         script: |
           xcode-project use-profiles
@@ -81,7 +84,6 @@ workflows:
       - name: Sign IPA with xcode
         script: |
           xcode-project build-ipa --workspace "ios/Runner.xcworkspace" --scheme "Runner"
-
     artifacts:
       - ./build/ios/ipa/*.ipa
 
@@ -94,6 +96,3 @@ workflows:
         submit_to_testflight: true
 #        beta_groups: 
 #          - Internal STB Testers
-
-      
-      
