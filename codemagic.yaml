@@ -25,11 +25,17 @@ workflows:
           keyAlias=deployment
           storeFile=/tmp/keystore.jks
           EOF     
+      - name: Increment version code
+        script: |
+          VERSION_CODE=$(($(get-latest-google-play-version-code --package-name com.hakim.edulink) + 1))
+          echo "New Version Code: $VERSION_CODE"
+          sed -i -e "s/versionCode [0-9]*/versionCode $VERSION_CODE/" android/app/build.gradle
       - name: Build AAB
         script: |
-          cd $CM_BUILD_DIR 
+          cd $CM_BUILD_DIR
           flutter packages pub get
           flutter build appbundle
+
     artifacts:
       - build/**/outputs/**/*.aab
     publishing:
