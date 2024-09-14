@@ -15,7 +15,6 @@ workflows:
       branch_patterns:
         - pattern: 'staging'
           include: true
-    
     scripts:
       - name: Setup the keystore
         script: |
@@ -26,12 +25,11 @@ workflows:
           keyAlias=deployment
           storeFile=/tmp/keystore.jks
           EOF     
-      - name: Get Flutter packages
+      - name: Build AAB
         script: |
-          flutter pub get
-      - name: Increment version and build AAB
-        script: |
-          flutter build appbundle --release
+          cd $CM_BUILD_DIR
+          flutter packages pub get
+          flutter build appbundle
     artifacts:
       - build/**/outputs/**/*.aab
     publishing:
