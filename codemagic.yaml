@@ -15,6 +15,7 @@ workflows:
       branch_patterns:
         - pattern: 'staging'
           include: true
+    
     scripts:
       - name: Setup the keystore
         script: |
@@ -25,17 +26,11 @@ workflows:
           keyAlias=deployment
           storeFile=/tmp/keystore.jks
           EOF     
-      - name: Increment version code
-        script: |
-          VERSION_CODE=$(($(get-latest-google-play-version-code --package-name com.hakim.edulink) + 1))
-          echo "New Version Code: $VERSION_CODE"
-          sed -i -e "s/versionCode [0-9]*/versionCode $VERSION_CODE/" android/app/build.gradle
       - name: Build AAB
         script: |
-          cd $CM_BUILD_DIR
+          cd $CM_BUILD_DIR 
           flutter packages pub get
           flutter build appbundle
-
     artifacts:
       - build/**/outputs/**/*.aab
     publishing:
@@ -65,10 +60,10 @@ workflows:
         - pattern: 'staging'
           include: true
     scripts:
-#      - name: Clean cache
-#        script: |
-#          rm pubspec.lock
-#          flutter packages pub get
+      - name: App version
+        script: |
+          APP_VERSION=$(grep 'version:' pubspec.yaml | head -n 1 | awk '{print $2}')
+          echo "Flutter version: $FLUTTER_VERSION"
       - name: Use the profile in xcode
         script: |
           xcode-project use-profiles
@@ -79,14 +74,13 @@ workflows:
         script: |
           find . -name "Podfile" -execdir pod install \;
       - name: Build IPA with Flutter
-        script: |
-          BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1))
+        script: | 
           flutter build ipa --release \
-            --build-name=1.0.$BUILD_NUMBER \
-            --build-number=$BUILD_NUMBER
+            --build-name=$APP_VERSION \
+#            --build-number=$APP_VERSION
       - name: Sign IPA with xcode
         script: |
-          xcode-project build-ipa --workspace "ios/Runner.xcworkspace" --scheme "Runner" --build-number=$BUILD_NUMBER
+          xcode-project build-ipa --workspace "ios/Runner.xcworkspace" --scheme "Runner"
     artifacts:
       - ./build/ios/ipa/*.ipa
 
