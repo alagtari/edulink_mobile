@@ -59,10 +59,10 @@ workflows:
         - pattern: 'staging'
           include: true
     scripts:
-      - name: Clean cache
-        script: |
-          rm pubspec.lock
-          flutter packages pub get
+#      - name: Clean cache
+#        script: |
+#          rm pubspec.lock
+#          flutter packages pub get
       - name: Use the profile in xcode
         script: |
           xcode-project use-profiles
