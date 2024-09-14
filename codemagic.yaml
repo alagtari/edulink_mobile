@@ -49,8 +49,6 @@ workflows:
       flutter: "3.22.2"
       xcode: latest 
       vars:
-        APP_VERSION: $(grep 'version:' pubspec.yaml | cut -d '+' -f 1 | awk '{print $2}')
-        BUILD_NUMBER: $(grep 'build_number' pubspec.yaml | awk '{print $NF}')
         APP_ID: 6480532854
     cache:
       cache_paths:
@@ -74,6 +72,10 @@ workflows:
       - name: Build IPA with Flutter
         script: | 
           # Build IPA with specific version and build number
+          APP_VERSION=$(grep 'version:' pubspec.yaml | cut -d '+' -f 1 | awk '{print $2}')
+          BUILD_NUMBER=$(grep 'build_number' pubspec.yaml | awk '{print $NF}')
+          echo "App version: $APP_VERSION"
+          echo "Build number: $BUILD_NUMBER"
           flutter build ipa --release \
             --build-name=$APP_VERSION \
             --build-number=$BUILD_NUMBER
